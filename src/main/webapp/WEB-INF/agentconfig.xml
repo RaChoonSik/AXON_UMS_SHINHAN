@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+이 파일은 DNS 대상 시스템의 SSO 인증을 처리하는 DNS 전용 에이전트에서 사용하는 각종 환경 설정 정보를 포함하고 있습니다.
+(환경설정파일 위치 지정)
+<방법 1>
+	sso.config.file과 sso.config.proxy.file 이름으로 설정파일 위치를 찾는다.
+	코드 >> ssoConfigFilepath = System.getProperty("sso.config.file");
+	따라서, 이 설정을 사용하려면, WAS 실행 시, "-Dsso.config.file=/usr/nets/config/agentconfig.xml"과 같은 옵션을 설정한다.
+<방법 2>
+	방법 1의 경우가 여의치 않을 경우, 또는 값을 설정하지 않았을 경우는
+	자동으로 classpath 경로에서 해당 파일을 찾는다.
+	코드 >> InputStream input = getClass().getResourceAsStream("/agentconfig.xml");
+	보통 WEB-INF/classes 폴더가 이에 해당한다.
+-->
+<agentConfig>
+    <common>
+        <clientIPCheckLevel value="0">
+            <skipDeviceUserAgentList>
+                <userAgent value="Android"/>
+                <userAgent value="iPhone"/>
+                <userAgent value="iPad"/>
+            </skipDeviceUserAgentList>
+        </clientIPCheckLevel>
+        <submitUrlOption value="submit"/>
+        <scriptOption value="top"/>
+        <serverTimeSyncBuffer value="0"/>
+        <methodExecution logTime="false">
+            <checkLive using="true"/>
+            <checkMobileWebView using="true">
+                <header name="User-Agent" value="os:ios_app,os:android_app"/>
+            </checkMobileWebView>
+        </methodExecution>
+        <proto proxyHttps="false" proxyProtoHeader="X-Forwarded-Proto"/>
+    </common>
+    <ssoProvider value="sso.devlottegrs.com">
+        <agentServiceUrl value="http://sso.devlottegrs.com/sso/AuthWeb/agentservice/web/%s.aspx" timeOut="5000"/>
+        <crypto type="AES128" key="50950402f5f9a22c79494fba040f17533785a41d7fabe474f8d835be25cdfed1"/>
+        <ssoSiteList>
+            <ssoSite siteDNS="umsdev.lottegrs.com" serverIP="10.67.45.53" agentType="1104"> 
+                <authCheckLevel>MEDIUM</authCheckLevel>
+                <defaultReturnURL>http://aspx60.nssod.com/SSO/SSOClient/Default.aspx</defaultReturnURL>
+            </ssoSite>
+        </ssoSiteList>
+    </ssoProvider>
+</agentConfig>

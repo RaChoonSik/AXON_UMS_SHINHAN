@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.co.enders.ums.sys.rns.dao.RnsStandardMapper">
+
+	<!-- 사용자 로그인 이력 조회 -->
+	<select id="getDomainList" parameterType="domainInfoVO" resultType="domainInfoVO">
+		SELECT *
+		  FROM (
+				SELECT A.DOMAINID
+					 , A.DOMAINNAME
+					 , A.REG_ID
+					 , A.REG_DT					 
+					 , A.UP_ID
+					 , A.UP_DT
+					 , (SELECT USER_NM FROM NEO_USER WHERE USER_ID = A.REG_ID) REG_NM					 					 
+					 , (SELECT USER_NM FROM NEO_USER WHERE USER_ID = A.UP_ID) UP_NM
+					 , ROW_NUMBER() OVER (ORDER BY DOMAINID DESC) SEQ
+					 , COUNT(1) OVER() TOTAL_COUNT
+				  FROM TS_DOMAIN_INFO A 
+				 WHERE 1=1 
+				   <if test="searchDomainName != null and searchDomainName != ''">
+				   AND A.DOMAINNAME LIKE '%' + #{searchDomainName} + '%'
+				   </if> 
+			   ) SRC 
+		 WHERE SEQ BETWEEN (#{page}-1)*#{rows}+1 AND #{page}*#{rows}
+	</select>
+	
+	<!-- 도메인 정보 조회-->
+	<select id="getDomainInfo" parameterType="domainInfoVO" resultType="domainInfoVO">
+ 				SELECT A.DOMAINID
+					 , A.DOMAINNAME
+					 , A.REG_ID
+					 , A.REG_DT					 
+					 , A.UP_ID
+					 , A.UP_DT
+					 , (SELECT USER_NM FROM NEO_USER WHERE USER_ID = A.REG_ID) REG_NM					 					 
+					 , (SELECT USER_NM FROM NEO_USER WHERE USER_ID = A.UP_ID) UP_NM 
+				  FROM TS_DOMAIN_INFO A 
+				 WHERE A.DOMAINID  = #{domainId}  
+	</select>	
+
+	<!-- 도메인 정보 등록 -->
+	<insert id="insertDomainInfo" parameterType="domainInfoVO" useGeneratedKeys="true"  keyProperty="domainId">
+		INSERT INTO TS_DOMAIN_INFO
+		(
+			  DOMAINNAME
+			, REG_ID
+			, REG_DT 
+		)
+		VALUES
+		(
+			  #{domainName}
+			, #{regId}
+			, #{regDt} 
+		)
+	</insert>
+	
+	<!-- 도메인 정보 수정  -->
+	<update id="updateDomainInfo" parameterType="domainInfoVO">
+		UPDATE TS_DOMAIN_INFO
+		SET DOMAINNAME = #{domainName},
+			UP_ID = #{upId},
+			UP_DT = #{upDt} 
+		WHERE DOMAINID = #{domainId}
+	</update>	
+	
+	<!-- 도메인 정보 삭제-->
+	<delete id="deleteDomainInfo" parameterType="domainInfoVO">
+		DELETE FROM TS_DOMAIN_INFO 
+		WHERE DOMAINID IN 		    
+			  <foreach collection="arrDomainId" item="item" index="index" open="(" close=")" separator=",">
+				#{item}
+			  </foreach>
+	</delete>
+	
+	<!-- 메일클리닉 일정관리 수정,저장  -->
+	<update id="updateMailClinic" parameterType="mailClinicInfoVO">
+		MERGE INTO NEO_EMAIL_CLINIC_SCH T1
+		USING ( 
+		       SELECT DISTINCT SUBSTRING(YMD,1,6) AS CLS_YM
+		            , CASE WHEN CONVERT(VARCHAR, EOMONTH(CAST(SUBSTRING(YMD,1,6) + '01' AS DATE)) , 112) >= REPLICATE('0',2-LEN(#{clsDt})) + #{clsDt}
+		        	  THEN CONVERT(VARCHAR,CAST(SUBSTRING(YMD,1,6) + REPLICATE('0',2-LEN(#{clsDt})) + #{clsDt} AS DATE) , 112) 
+		        	  ELSE CONVERT(VARCHAR, EOMONTH(CAST(SUBSTRING(YMD,1,6) + '01' AS DATE), 112)) END AS CLS_DT 
+		            , #{clsErrCnt} AS CLS_ERR_CNT
+		            , 1 AS CLS_STR_MM_CNT
+		            , #{clsEndMmCnt} AS CLS_END_MM_CNT
+		            , #{regId} AS RID
+		            , REPLACE(REPLACE(REPLACE(CONVERT(VARCHAR(19), CONVERT(DATETIME, GETDATE(), 112),126),'-',''),'T',''),':','') RDT
+		          FROM NEO_WEEKCD 
+		         WHERE SUBSTRING(YMD,1,6) = #{clsYm}
+				) T2
+		ON (T1.CLS_YM = T2.CLS_YM)
+		WHEN MATCHED THEN 
+		  UPDATE SET  T1.CLS_DT = T2.CLS_DT
+		            , T1.CLS_ERR_CNT = T2.CLS_ERR_CNT
+		            , T1.CLS_STR_MM_CNT = T2.CLS_STR_MM_CNT
+		            , T1.CLS_END_MM_CNT = T2.CLS_END_MM_CNT
+		            , T1.UP_ID = T2.RID
+		            , T1.UP_DT = T2.RDT 
+		WHEN NOT MATCHED THEN 
+		   INSERT (CLS_YM, CLS_DT , CLS_ERR_CNT , CLS_STR_MM_CNT , CLS_END_MM_CNT , REG_ID, REG_DT)
+		   VALUES (T2.CLS_YM, T2.CLS_DT , T2.CLS_ERR_CNT , T2.CLS_STR_MM_CNT , T2.CLS_END_MM_CNT , T2.RID, T2.RDT);
+	</update>
+	
+	<!-- 메일클리닉 일정관리 삭제  -->
+	<update id="deleteMailClinic" parameterType="mailClinicInfoVO">
+		DELETE FROM NEO_EMAIL_CLINIC_SCH		 
+		WHERE CLS_YM = #{clsYm}
+	</update>
+	
+	<!-- 메일클리닉 일정관리 조회-->
+	<select id="getMailClinicList" parameterType="mailClinicInfoVO" resultType="mailClinicInfoVO">
+		 SELECT CLS_YM,
+		        DATEPART( DD, CLS_DT) AS CLS_DT,
+		        CLS_ERR_CNT,
+		        CLS_STR_MM_CNT,
+		        CLS_END_MM_CNT 
+		   FROM NEO_EMAIL_CLINIC_SCH WHERE CLS_YM LIKE  '' + #{clsY} + '%' 
+	</select>	
+	
+	
+	<!-- 메일클리닉 일정관리 일괄수정,저장  -->
+	<update id="updateAllMailClinic" parameterType="mailClinicInfoVO">
+		MERGE INTO NEO_EMAIL_CLINIC_SCH T1
+		USING ( 
+		       SELECT DISTINCT SUBSTRING(YMD,1,6) AS CLS_YM
+		            , CASE WHEN CONVERT(VARCHAR, EOMONTH(CAST(SUBSTRING(YMD,1,6) + '01' AS DATE)) , 112) >= REPLICATE('0',2-LEN(#{clsDt})) + #{clsDt}
+		        	  THEN CONVERT(VARCHAR,CAST(SUBSTRING(YMD,1,6) + REPLICATE('0',2-LEN(#{clsDt})) + #{clsDt} AS DATE) , 112) 
+		        	  ELSE CONVERT(VARCHAR, EOMONTH(CAST(SUBSTRING(YMD,1,6) + '01' AS DATE), 112)) END AS CLS_DT 
+		            , #{clsErrCnt} AS CLS_ERR_CNT
+		            , 1 AS CLS_STR_MM_CNT
+		            , #{clsEndMmCnt} AS CLS_END_MM_CNT
+		            , #{regId} AS RID
+		            , REPLACE(REPLACE(REPLACE(CONVERT(VARCHAR(19), CONVERT(DATETIME, GETDATE(), 112),126),'-',''),'T',''),':','') RDT
+		          FROM NEO_WEEKCD 
+		         WHERE SUBSTRING(YMD,1,6) >= #{clsYm}		           
+				) T2
+		ON (T1.CLS_YM = T2.CLS_YM)
+		WHEN MATCHED THEN 
+		  UPDATE SET  T1.CLS_DT = T2.CLS_DT
+		            , T1.CLS_ERR_CNT = T2.CLS_ERR_CNT
+		            , T1.CLS_STR_MM_CNT = T2.CLS_STR_MM_CNT
+		            , T1.CLS_END_MM_CNT = T2.CLS_END_MM_CNT
+		            , T1.UP_ID = T2.RID
+		            , T1.UP_DT = T2.RDT 
+		WHEN NOT MATCHED THEN 
+		   INSERT (CLS_YM, CLS_DT , CLS_ERR_CNT , CLS_STR_MM_CNT , CLS_END_MM_CNT , REG_ID, REG_DT)
+		   VALUES (T2.CLS_YM, T2.CLS_DT , T2.CLS_ERR_CNT , T2.CLS_STR_MM_CNT , T2.CLS_END_MM_CNT , T2.RID, T2.RDT);
+	</update>
+	
+	<!-- 메일클리닉 일정관리 일괄 삭제  -->
+	<update id="deleteAllMailClinic" parameterType="mailClinicInfoVO">
+		DELETE FROM NEO_EMAIL_CLINIC_SCH 
+ 		WHERE SUBSTRING(CLS_YM,1,6) > #{clsYm}
+   		  AND SUBSTRING(CLS_YM,5,2) IN 
+   		<foreach collection="arrDelMonth" item="item" index="index" open="(" close=")" separator=",">
+		#{item}
+		</foreach>  
+	</update>
+			
+</mapper>

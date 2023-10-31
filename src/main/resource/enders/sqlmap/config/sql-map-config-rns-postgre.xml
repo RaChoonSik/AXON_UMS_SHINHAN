@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+
+	<settings>
+		<setting name="mapUnderscoreToCamelCase" value="true"/>
+		<setting name="jdbcTypeForNull" value="NULL"/>
+	</settings>
+
+	<typeAliases>
+		<typeAlias alias="string"					type="java.lang.String" />
+		<typeAlias alias="map"     					type="java.util.Map" />
+				
+		<typeAlias alias="codeVO"					type="kr.co.enders.ums.com.vo.CodeVO" />
+		
+		<!-- 자동발송관리 -->
+		<typeAlias alias="rnsTemplateVO"			type="kr.co.enders.ums.rns.tmp.vo.RnsTemplateVO" />
+		<typeAlias alias="rnsServiceVO"				type="kr.co.enders.ums.rns.svc.vo.RnsServiceVO" />
+		<typeAlias alias="rnsAttachVO"				type="kr.co.enders.ums.rns.svc.vo.RnsAttachVO" />
+		<typeAlias alias="rnsWebAgentVO"			type="kr.co.enders.ums.rns.svc.vo.RnsWebAgentVO" />
+		<typeAlias alias="rnsRecipientInfoVO"		type="kr.co.enders.ums.rns.svc.vo.RnsRecipientInfoVO" />
+		<typeAlias alias="rnsMailQueueVO"			type="kr.co.enders.ums.rns.svc.vo.RnsMailQueueVO" />
+		<typeAlias alias="rnsMailQueueTestVO"		type="kr.co.enders.ums.rns.svc.vo.RnsMailQueueTestVO" />
+		<typeAlias alias="rnsApprovalLineVO"		type="kr.co.enders.ums.rns.svc.vo.RnsSecuApprovalLineVO" />
+		<typeAlias alias="rnsProhibitWordVO"		type="kr.co.enders.ums.rns.svc.vo.RnsProhibitWordVO" />
+		
+		<!--RNS 통계분석 -->
+		<typeAlias alias="rnsAnaMonthVO"			type="kr.co.enders.ums.rns.ana.vo.RnsAnaMonthVO" />
+		<typeAlias alias="rnsAnaServiceVO"			type="kr.co.enders.ums.rns.ana.vo.RnsAnaServiceVO" />
+		<typeAlias alias="rnsAnaDomainVO"			type="kr.co.enders.ums.rns.ana.vo.RnsAnaDomainVO" />
+		<typeAlias alias="rnsAnaDetailLogVO"		type="kr.co.enders.ums.rns.ana.vo.RnsAnaDetailLogVO" />
+		<typeAlias alias="rnsAnaMailSendResultVO"	type="kr.co.enders.ums.rns.ana.vo.RnsAnaMailSendResultVO" />
+	</typeAliases>
+
+	<mappers>
+		<mapper resource="enders/sqlmap/rns/tmp/TemplateSQL-rns-postgre.xml"></mapper>
+		<mapper resource="enders/sqlmap/rns/svc/ServiceSQL-rns-postgre.xml"></mapper>
+		<mapper resource="enders/sqlmap/rns/ana/AnalysisSQL-rns-postgre.xml"></mapper>
+	</mappers>
+	
+</configuration>
