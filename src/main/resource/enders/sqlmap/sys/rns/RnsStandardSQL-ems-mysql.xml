@@ -180,7 +180,9 @@
 			  , CLS_STR_MM_CNT = T2.CLS_STR_MM_CNT
 			  , CLS_END_MM_CNT = T2.CLS_END_MM_CNT
 			  , UP_ID = T2.RID
-			  , UP_DT = T2.RDT 
+			  , UP_DT = T2.RDT
+			  
+			  
 	</update>
 	
 	<!-- 메일클리닉 일정관리 일괄 삭제  -->
