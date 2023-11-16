@@ -1127,7 +1127,8 @@ public class CampaignController {
 		campaignTemplateVO.setSmail( cryptoService.getEncrypt("SMAIL", campaignTemplateVO.getSmail()) );
 		
 		// 서비스 작성내용 파일로 생성(파일 생성 전 디렉토리 생성)
-		String contFlPath = "content/" + (String)session.getAttribute("NEO_USER_ID") + "/" + StringUtil.getDate(Code.TM_YMDHMSM) + ".tmp";
+		//String contFlPath = "content/" + (String)session.getAttribute("NEO_USER_ID") + "/" + StringUtil.getDate(Code.TM_YMDHMSM) + ".tmp";
+		String contFlPath = "content/" + (String)session.getAttribute("NEO_USER_ID") + "/" + StringUtil.getDate(Code.TM_YMDHMSM) + ".html";
 		String basePath = properties.getProperty("FILE.UPLOAD_PATH");
 		String filePath = basePath + "/" + contFlPath;
 		if("1".equals(campaignTemplateVO.getContentsTyp().trim())) {
@@ -1706,7 +1707,8 @@ public class CampaignController {
 			campaignTemplateVO.setContentsPath(null);
 		} else {
   			if(contentsPath == null || "".equals(contentsPath)) {
-				String contFlPath = "content/" + (String)session.getAttribute("NEO_USER_ID") + "/" + StringUtil.getDate(Code.TM_YMDHMSM) + ".tmp";
+				//String contFlPath = "content/" + (String)session.getAttribute("NEO_USER_ID") + "/" + StringUtil.getDate(Code.TM_YMDHMSM) + ".tmp";
+  				String contFlPath = "content/" + (String)session.getAttribute("NEO_USER_ID") + "/" + StringUtil.getDate(Code.TM_YMDHMSM) + ".html";
 				String basePath = properties.getProperty("FILE.UPLOAD_PATH");
 				String filePath = basePath + "/" + contFlPath;
 				contentsPath = filePath;

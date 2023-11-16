@@ -1096,7 +1096,7 @@ public class RnsServiceController {
 			serviceVO.setContentsPath(null);
 		} else {
   			if(contentsPath == null || "".equals(contentsPath)) {
-				String contFlPath = "content/" + (String)session.getAttribute("NEO_USER_ID") + "/" + StringUtil.getDate(Code.TM_YMDHMSM) + ".tmp";
+				String contFlPath = "content/" + (String)session.getAttribute("NEO_USER_ID") + "/" + StringUtil.getDate(Code.TM_YMDHMSM) + ".html";
 				String basePath = properties.getProperty("FILE.UPLOAD_PATH");
 				String filePath = basePath + "/" + contFlPath;
 				contentsPath = filePath;
