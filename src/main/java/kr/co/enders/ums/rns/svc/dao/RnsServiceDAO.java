@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 
 import kr.co.enders.ums.ems.apr.dao.SecuApprovalLineMapper;
 import kr.co.enders.ums.ems.apr.vo.SecuApprovalLineVO;
+import kr.co.enders.ums.rns.svc.vo.ApiRnsRecipientInfoVO;
 import kr.co.enders.ums.rns.svc.vo.RnsAttachVO;
 import kr.co.enders.ums.rns.svc.vo.RnsMailQueueTestVO;
 import kr.co.enders.ums.rns.svc.vo.RnsMailQueueVO;
@@ -76,12 +77,18 @@ public class RnsServiceDAO implements RnsServiceMapper {
 	public int insertMailQueue(RnsMailQueueVO queueVO) throws Exception {
 		return sqlSessionRns.getMapper(RnsServiceMapper.class).insertMailQueue(queueVO);
 	}
+	
+	@Override
+	public int insertMailQueueApi(ApiRnsRecipientInfoVO apiRnsRecipientInfoVO) throws Exception {
+		return sqlSessionRns.getMapper(RnsServiceMapper.class).insertMailQueueApi(apiRnsRecipientInfoVO);
+	} 
 
 	@Override
 	public int insertMailQueueTest(RnsMailQueueTestVO testVO) throws Exception {
 		return sqlSessionRns.getMapper(RnsServiceMapper.class).insertMailQueueTest(testVO);
 	}
 
+	
 	@Override
 	public RnsWebAgentVO getWebAgentInfo(int tid) throws Exception {
 		return sqlSessionRns.getMapper(RnsServiceMapper.class).getWebAgentInfo(tid);
@@ -140,6 +147,11 @@ public class RnsServiceDAO implements RnsServiceMapper {
 	@Override
 	public int insertRecipientInfo(RnsRecipientInfoVO recipientVO) throws Exception {
 		return sqlSessionRns.getMapper(RnsServiceMapper.class).insertRecipientInfo(recipientVO);
+	}
+	
+	@Override
+	public int insertRecipientInfoApi(ApiRnsRecipientInfoVO apiRnsRecipientInfoVO) throws Exception {
+		return sqlSessionRns.getMapper(RnsServiceMapper.class).insertRecipientInfoApi(apiRnsRecipientInfoVO);
 	}
 	
 	@Override

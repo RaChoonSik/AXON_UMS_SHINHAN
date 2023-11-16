@@ -26,6 +26,9 @@
 		<typeAlias alias="rnsApprovalLineVO"		type="kr.co.enders.ums.rns.svc.vo.RnsSecuApprovalLineVO" />
 		<typeAlias alias="rnsProhibitWordVO"		type="kr.co.enders.ums.rns.svc.vo.RnsProhibitWordVO" />
 		
+		<!--  API 관리  -->
+		<typeAlias alias="apiRnsRecipientInfoVO"		type="kr.co.enders.ums.rns.svc.vo.ApiRnsRecipientInfoVO" />
+		
 		<!--RNS 통계분석 -->
 		<typeAlias alias="rnsAnaMonthVO"			type="kr.co.enders.ums.rns.ana.vo.RnsAnaMonthVO" />
 		<typeAlias alias="rnsAnaServiceVO"			type="kr.co.enders.ums.rns.ana.vo.RnsAnaServiceVO" />

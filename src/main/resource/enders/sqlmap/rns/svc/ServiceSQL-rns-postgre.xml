@@ -222,10 +222,18 @@
 	</update>
 	
 	<!-- RNS API 발송 요청 처리 관련 -->
+	<!-- 
 	<select id="getCountRequestKey" parameterType="string" resultType="_int">
 		SELECT COUNT(*) AS REC_CNT
 		  FROM TS_EMAIL_API_STG 
 		 WHERE REQUESTKEY = #{requestKey}
+	</select>
+	 -->
+	 
+	<select id="getCountRequestKey" parameterType="string" resultType="_int">
+		SELECT COUNT(*) AS REC_CNT
+		  FROM TS_MAILQUEUE 
+		 WHERE REQUEST_KEY = #{requestKey}
 	</select>
 	
 	<select id="getServiceInfoByEai" parameterType="string" resultType="rnsServiceVO">
@@ -377,6 +385,119 @@
 	
 		
 	<insert id="insertRecipientInfo" parameterType="rnsRecipientInfoVO">
+		INSERT INTO TS_RECIPIENTINFO
+		(
+			  MID
+			, SUBID
+			, TID
+			, RID
+			, RNAME
+			, RMAIL
+			, ENCKEY
+			, MAP1
+			, MAP2
+			, MAP3
+			, MAP4
+			, MAP5
+			, MAP6
+			, MAP7
+			, MAP8
+			, MAP9
+			, MAP10
+			, MAP11
+			, MAP12
+			, MAP13
+			, MAP14
+			, MAP15
+			, BIZKEY
+		)
+		VALUES
+		(
+			  #{mid}
+			, #{subid}
+			, #{tid}
+			, #{rid}
+			, #{rname}
+			, #{rmail}
+			, #{enckey}
+			, #{map1}
+			, #{map2}
+			, #{map3}
+			, #{map4}
+			, #{map5}
+			, #{map6}
+			, #{map7}
+			, #{map8}
+			, #{map9}
+			, #{map10}
+			, #{map11}
+			, #{map12}
+			, #{map13}
+			, #{map14}
+			, #{map15}
+			, #{bizkey}
+		)
+	</insert>
+	
+	<insert id="insertMailQueueApi" parameterType="apiRnsRecipientInfoVO">
+		INSERT INTO TS_MAILQUEUE
+		(
+			  MID
+			, SUBID
+			, TID
+			, SPOS
+			, SNAME
+			, SMAIL
+			, SID
+			, RPOS
+			, QUERY
+			, CTNPOS
+			, SUBJECT
+			, CONTENTS
+			, CDATE
+			, SDATE
+			, STATUS
+			, DBCODE
+			, REFMID
+			, CHARSET
+			, ATTACHFILE01
+			, ATTACHFILE02
+			, ATTACHFILE03
+			, ATTACHFILE04
+			, ATTACHFILE05
+			, REQUEST_KEY
+		)
+		VALUES
+		(
+			  NEXTVAL('MID_SEQ')
+			, #{subid}
+			, #{tid}
+			, #{spos}
+			, #{sname}
+			, #{smail}
+			, #{sid}
+			, #{rpos}
+			, #{query}
+			, #{ctnpos}
+			, #{subject}
+			, #{contents}
+			, NOW()
+			, NOW()
+			, #{status}
+			, #{dbcode}
+			, #{refmid}
+			, #{charset}
+			, #{attachfile01}
+			, #{attachfile02}
+			, #{attachfile03}
+			, #{attachfile04}
+			, #{attachfile05}
+			, #{requestKey}
+		)
+	</insert>
+	
+	
+	<insert id="insertRecipientInfoApi" parameterType="apiRnsRecipientInfoVO">
 		INSERT INTO TS_RECIPIENTINFO
 		(
 			  MID

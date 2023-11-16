@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import kr.co.enders.ums.rns.svc.vo.RnsSecuApprovalLineVO;
+import kr.co.enders.ums.rns.svc.vo.ApiRnsRecipientInfoVO;
 import kr.co.enders.ums.rns.svc.vo.RnsAttachVO;
 import kr.co.enders.ums.rns.svc.vo.RnsMailQueueTestVO;
 import kr.co.enders.ums.rns.svc.vo.RnsMailQueueVO;
@@ -268,4 +269,12 @@ public interface RnsServiceService {
 	 * @throws Exception
 	 */
 	public int getCountRequestKey(String requestKey) throws Exception;
+	
+	/**
+	 * 실시간 API 메일 정보 등록
+	 * @param requestKey
+	 * @return
+	 * @throws Exception
+	 */
+	public int insertApiSendTsEmai(ApiRnsRecipientInfoVO apiRnsRecipientInfoVO) throws Exception;
 }

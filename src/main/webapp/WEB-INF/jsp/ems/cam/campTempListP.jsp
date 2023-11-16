@@ -2,7 +2,7 @@
 	/**********************************************************
 	*	작성자 : 김준희
 	*	작성일시 : 2022.09.26
-	*	설명 : 캠페인 템플릿 등록현황 화면
+	*	설명 : API 템플릿 등록현황 화면
 	**********************************************************/
 --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
@@ -34,7 +34,7 @@
 					<!-- cont-head// -->
 					<section class="cont-head">
 						<div class="title">
-							<h2>캠페인 템플릿 목록</h2>
+							<h2>API 템플릿 목록</h2>
 						</div>
 					</section>
 					<!-- //cont-head -->

@@ -2307,6 +2307,7 @@ public class RnsServiceController {
 	 * @return
 	 * @apiNote This Api, for  Huge(over 10,000) items 
 	 */
+	/*
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value="/api/sendTsEmailList")
 	public void goApiSendTsEmailList(@RequestBody Map<String, Object> params, Model model, HttpServletRequest request, HttpServletResponse response, HttpSession session) {
@@ -2601,4 +2602,5 @@ public class RnsServiceController {
 		writer.flush();
 		writer.close();
 	}
+	*/
 }

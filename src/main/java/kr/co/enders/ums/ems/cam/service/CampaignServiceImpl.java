@@ -140,7 +140,7 @@ public class CampaignServiceImpl implements CampaignService {
 		}
 		
 		// 웹에이전트 둥록
-		if(!StringUtil.isNull(campaignTemplateVO.getWebAgentAttachYn())) {
+		if(!StringUtil.isNull(campaignTemplateVO.getWebAgentAttachYn()) && "Y".equals(campaignTemplateVO.getWebAgentAttachYn())) {
 			CampaignTemplateWebAgentVO webAgent = new CampaignTemplateWebAgentVO();
 			webAgent.setTid(tid);
 			webAgent.setAttNo(0);

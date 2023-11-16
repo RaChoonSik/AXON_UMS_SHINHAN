@@ -20,6 +20,7 @@ import kr.co.enders.ums.ems.cam.vo.ProhibitWordVO;
 import kr.co.enders.ums.ems.cam.vo.TaskVO;
 import kr.co.enders.ums.rns.svc.dao.RnsServiceDAO;
 import kr.co.enders.ums.rns.svc.vo.RnsSecuApprovalLineVO;
+import kr.co.enders.ums.rns.svc.vo.ApiRnsRecipientInfoVO;
 import kr.co.enders.ums.rns.svc.vo.RnsAttachVO;
 import kr.co.enders.ums.rns.svc.vo.RnsMailQueueTestVO;
 import kr.co.enders.ums.rns.svc.vo.RnsMailQueueVO;
@@ -691,5 +692,28 @@ public class RnsServiceServiceImpl implements RnsServiceService {
 	@Override
 	public int getCountRequestKey(String requestKey) throws Exception{
 		return rnsServiceDAO.getCountRequestKey(requestKey);
+	}
+	
+
+	@Override
+	public int insertApiSendTsEmai(ApiRnsRecipientInfoVO apiRnsRecipientInfoVO) throws Exception {
+		int result = 0;
+		
+		// MailQueue 등록
+		result = rnsServiceDAO.insertMailQueueApi(apiRnsRecipientInfoVO);
+		
+		if (result < 1 ) {
+			return result;
+		} else {
+			long mid = rnsServiceDAO.getCurrMailQueueId();
+			
+			if (mid < 1) {
+				return -2;
+			} else { 
+				apiRnsRecipientInfoVO.setMid(mid);
+				result = rnsServiceDAO.insertRecipientInfoApi(apiRnsRecipientInfoVO);
+				return result;
+			}
+		}
 	}
 }

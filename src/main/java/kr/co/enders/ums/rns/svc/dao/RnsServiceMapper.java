@@ -8,6 +8,7 @@ package kr.co.enders.ums.rns.svc.dao;
 import java.util.List;
 
 import kr.co.enders.ums.rns.svc.vo.RnsSecuApprovalLineVO;
+import kr.co.enders.ums.rns.svc.vo.ApiRnsRecipientInfoVO;
 import kr.co.enders.ums.rns.svc.vo.RnsAttachVO;
 import kr.co.enders.ums.rns.svc.vo.RnsMailQueueTestVO;
 import kr.co.enders.ums.rns.svc.vo.RnsMailQueueVO;
@@ -320,4 +321,20 @@ public interface RnsServiceMapper {
 	 * @throws Exception
 	 */
 	public int getCountRequestKey(String requestKey) throws Exception;
+	
+	/**
+	 * 자동메일 API 정보 등록(MailQueue)
+	 * @param apiRnsRecipientInfoVO
+	 * @return
+	 * @throws Exception
+	 */
+	public int insertMailQueueApi(ApiRnsRecipientInfoVO apiRnsRecipientInfoVO) throws Exception;
+	
+	/**
+	 * 자동메일 API 정보 등록(RnsRecipientInfoVO)
+	 * @param apiRnsRecipientInfoVO
+	 * @return
+	 * @throws Exception
+	 */
+	public int insertRecipientInfoApi(ApiRnsRecipientInfoVO apiRnsRecipientInfoVO) throws Exception;
 }

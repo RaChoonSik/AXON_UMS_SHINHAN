@@ -2,7 +2,7 @@
 	/**********************************************************
 	*	작성자 : 김준희
 	*	작성일시 : 2022.09.27
-	*	설명 : 캠페인템플릿 정보수정 화면
+	*	설명 : API템플릿 정보수정 화면
 	**********************************************************/
 --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
@@ -15,7 +15,7 @@
 $(document).ready(function() {
 	setTimeout(function(){
 		setCampTempContent("<c:out value='${campTempInfo.contentsTyp}'/>","<c:out value='${campTempInfo.contentsPath}'/>");
-	},2000);
+	},1000);
 });
 campTempStatus = "<c:out value='${campTempInfo.status}'/>";
 </script>
@@ -133,6 +133,15 @@ campTempStatus = "<c:out value='${campTempInfo.status}'/>";
 												</div>
 											</li>
 											<li class="col-full">
+												<label class="required">API 템플릿 번호</label>
+												<div class="list-item">
+													<div class="filebox">
+														<p class="label bg-gray" style="width:100%"><c:out value="${campTempInfo.tid}"/></p>
+													</div>
+												</div>
+											</li>
+											<!-- 
+											<li class="col-full">
 												<label class="required">연계 템플릿 번호</label>
 												<div class="list-item">
 													<div class="filebox">
@@ -141,6 +150,7 @@ campTempStatus = "<c:out value='${campTempInfo.status}'/>";
 													</div>
 												</div>
 											</li>
+											 -->
 											<%-- 관리자의 경우 전체 요청부서를 전시하고 그 외의 경우에는 숨김 --%>
 											<c:if test="${'Y' eq NEO_ADMIN_YN}">
 												<li>
@@ -187,7 +197,7 @@ campTempStatus = "<c:out value='${campTempInfo.status}'/>";
 													<input type="text" name="smail" value="<crypto:decrypt colNm='SMAIL' data='${campTempInfo.smail}'/>">
 												</div>
 											</li>	
-											<li>
+											<li style="display:none">
 													<label>웹에이전트</label>
 													<div class="list-item">
 														<div class="filebox" style="width: 100%;">
@@ -213,7 +223,7 @@ campTempStatus = "<c:out value='${campTempInfo.status}'/>";
 														</div>
 													</div>
 												</li>	
-											<li>
+											<li style="display:none">>
 												<label>금칙어</label>
 												<div class="list-item">
 													<div class="filebox">
@@ -228,7 +238,7 @@ campTempStatus = "<c:out value='${campTempInfo.status}'/>";
 													<label><input type="checkbox" name="recvChkYn" id="recvChkYn" <c:if test="${'Y' eq campTempInfo.recvChkYn}"> checked </c:if> value="${ campTempInfo.recvChkYn }"><span>수신확인</span></label>
 												</div>
 											</li>
-											<li>
+											<li style="display:none">
 												<label>수신자 그룹</label>
 												<div class="list-item">
 													<div class="filebox">
@@ -286,7 +296,7 @@ campTempStatus = "<c:out value='${campTempInfo.status}'/>";
 													<input type="text" id="emailSubject" name="emailSubject" value="<c:out value='${campTempInfo.emailSubject}'/>" placeholder="템플릿명을 입력해주세요.">
 												</div>
 											</li>
-											<li>
+											<li style="display:none">>
 												<label>함수입력</label>
 												<div class="list-item">
 													<div class="select" style="width: calc(100% - 13.5rem);">

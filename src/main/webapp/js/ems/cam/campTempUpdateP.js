@@ -1,14 +1,14 @@
 /**********************************************************
 *	작성자 : 김준희
 *	작성일시 : 2022.09.28
-*	설명 : 캠페인템플릿 정보수정 JavaScript
+*	설명 : API 템플릿 정보수정 JavaScript
 **********************************************************/
 var dateRegex = RegExp(/^\d{4}.(0[1-9]|1[012]).(0[1-9]|[12][0-9]|3[01])$/);
 var checkDateInput = false;
 var campTempStatus = ""; 
 $(document).ready(function() {
 	// 머지 설정
-	goMerge();
+	// goMerge();
 });
 
 
@@ -498,6 +498,7 @@ function goUpdate() {
 		return;
 	}
 	
+	/*
 	if($("#prohibitCheckResult").val() == "") {
 		alert("금칙어 항목이 검증되지 않았습니다");	
 		$("#chkProhibit").focus();
@@ -508,6 +509,7 @@ function goUpdate() {
 			return;
 		}
 	}
+	*/
 	
 	if(typeof $("#deptNo").val() != "undefined") {
 		if($("#deptNo").val() != "0" && $("#userId").val() == "") {
@@ -581,6 +583,7 @@ function goUpdate() {
 	oEditors.getById["ir1"].exec("UPDATE_CONTENTS_FIELD", []);
 	$("#serviceContent").val( $("#ir1").val() );
 
+	/*
 	if ( $("#prohibitCheckTitle").val() != $("#emailSubject").val()) {
 		alert("제목이 변경되었습니다 금칙어를 확인해주세요");
 		$("#chkProhibit").focus();
@@ -591,7 +594,7 @@ function goUpdate() {
 		$("#chkProhibit").focus();
 		return;
 	}
-	
+	*/
 	
 	if($("input[name='infoCheckYn']").eq(0).is(":checked")) {
 		$("#titleChkYn").val("Y");
@@ -611,6 +614,7 @@ function goUpdate() {
 		$("#attachFileChkYn").val("N");
 	}
 	
+	/*
 	var templateCd= $("#eaiCampNo").val();
 	if (templateCd != "") {
 		if ($("#chkEaiCampNo").val() != "Y"){
@@ -620,7 +624,7 @@ function goUpdate() {
 		}
 		$("#eaiCampNo").removeAttr("disabled");
 	}
-	
+	*/
 	$("#campTempInfoForm").attr("target","iFrmMail").attr("action","/ems/cam/campTempUpdate.ums").submit();
 }
 

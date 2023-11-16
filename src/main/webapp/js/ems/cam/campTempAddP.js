@@ -1,7 +1,7 @@
 /**********************************************************
 *	작성자 : 김준희
 *	작성일시 : 2022.09.27
-*	설명 : 캠페인템플릿 신규등록 JavaScript
+*	설명 : API 템플릿 신규등록 JavaScript
 **********************************************************/
 
 var dateRegex = RegExp(/^\d{4}.(0[1-9]|1[012]).(0[1-9]|[12][0-9]|3[01])$/);
@@ -9,7 +9,7 @@ var checkDateInput = false;
 
 $(document).ready(function() {
 	// 머지 설정
-	goMerge();
+	// goMerge();
 });
 
 // 캠페인을 선택하였을 때 발생하는 이벤트
@@ -373,6 +373,7 @@ function goAdd () {
 		popCampSelect();
 		return;
 	}
+	/*
 	if($("#segNoc").val() == "") {
 		alert("수신자그룹을 선택하세요.");
 		popSegSelect();
@@ -389,7 +390,7 @@ function goAdd () {
 			return;
 		}
 	}
-	
+	*/
 	if(typeof $("#deptNo").val() != "undefined") {
 		if($("#deptNo").val() == "0"){
 			alert("사용자그룹을 선택하세요.");
@@ -447,6 +448,7 @@ function goAdd () {
 		$("#recvChkYn").val("N");
 	}
 	 
+	/*
 	var templateCd= $("#eaiCampNo").val();
 	if (templateCd != "") {
 		if ($("#chkEaiCampNo").val() != "Y"){
@@ -456,11 +458,13 @@ function goAdd () {
 		}
 		$("#eaiCampNo").removeAttr("disabled");
 	}
+	*/
 	
 	// 스마트에디터 편집기 내용 serviceContent로 복사
 	oEditors.getById["ir1"].exec("UPDATE_CONTENTS_FIELD", []);
 	$("#serviceContent").val( $("#ir1").val() );	
 	
+	/*
 	if ( $("#prohibitCheckTitle").val() != $("#emailSubject").val()) {
 		alert("제목이 변경되었습니다 금칙어를 확인해주세요");
 		$("#chkProhibit").focus();
@@ -471,7 +475,7 @@ function goAdd () {
 		$("#chkProhibit").focus();
 		return;
 	}
-	
+	*/
 	$("#campTempInfoForm").attr("target","iFrmMail").attr("action","/ems/cam/campTempAdd.ums").submit();
 	
 }

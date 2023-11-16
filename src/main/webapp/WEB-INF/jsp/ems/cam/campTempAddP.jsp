@@ -2,7 +2,7 @@
 	/**********************************************************
 	*	작성자 : 김준희
 	*	작성일시 : 2022.09.27
-	*	설명 : 캠페인템플릿 신규등록 화면
+	*	설명 : API 템플릿 신규등록 화면
 	**********************************************************/
 --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
@@ -39,7 +39,7 @@
 					<!-- cont-head// -->
 					<section class="cont-head">
 						<div class="title">
-							<h2>캠페인템플릿 신규등록</h2>
+							<h2>API 템플릿 신규등록</h2>
 						</div>
 					</section>
 					<!-- //cont-head -->
@@ -113,6 +113,7 @@
 													</div>
 												</div>
 											</li>
+											<!-- 
 											<li class="col-full">
 												<label class="required">연계 템플릿 번호</label>
 												<div class="list-item">
@@ -122,6 +123,7 @@
 													</div>
 												</div>
 											</li>
+											 -->
 											<%-- 관리자의 경우 전체 요청부서를 전시하고 그 외의 경우에는 숨김 --%>
 											<c:if test="${'Y' eq NEO_ADMIN_YN}">
 												<li>
@@ -161,8 +163,9 @@
 												<div class="list-item">
 													<input type="text" name="smail" value="<crypto:decrypt colNm='MAIL_FROM_EM' data='${campTempInfo.smail}'/>">
 												</div>
-											</li>	
-											<li>
+											</li>
+											
+											<li style="display:none">
 												<label>웹에이전트</label>
 												<div class="list-item">
 													<div class="filebox" style="width: 100%;">
@@ -182,7 +185,7 @@
 													</div>
 												</div>
 											</li>
-											<li>
+											<li style="display:none">>
 												<label class="required"> 금칙어</label>
 												<div class="list-item">
 													<div class="filebox">
@@ -197,7 +200,7 @@
 													<label><input type="checkbox" name="recvChkYn" id="recvChkYn" value="Y" checked ><span>수신확인</span></label>
 												</div>
 											</li>
-											<li>
+											<li style="display:none">>
 												<label class="required">수신자 그룹</label>
 												<div class="list-item">
 													<div class="filebox">
@@ -238,7 +241,7 @@
 													<input type="text" id="emailSubject" name=emailSubject placeholder="메일 제목을 입력해주세요.">
 												</div>
 											</li>
-											<li>
+											<li style="display:none">>
 												<label>함수입력</label>
 												<div class="list-item">
 													<div class="select" style="width: calc(100% - 13.5rem);">

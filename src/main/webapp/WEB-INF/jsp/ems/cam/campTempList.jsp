@@ -2,7 +2,7 @@
 	/**********************************************************
 	*	작성자 : 김준희
 	*	작성일시 : 2022.09.26
-	*	설명 : 캠페인 템플릿 등록현황 목록 조회
+	*	설명 : API 템플릿 등록현황 목록 조회
 	**********************************************************/
 --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
@@ -45,6 +45,7 @@
 			<caption>그리드 정보</caption>
 			<colgroup>
 				<col style="width:5%;">
+				<col style="width:10%;">
 				<col style="width:5%;">
 				<col style="width:23%;">
 				<col style="width:8%;">
@@ -54,7 +55,7 @@
 				<col style="width:10%;">
 				<!-- <col style="width:8%;"> -->
 				<!-- <col style="width:8%;"> -->
-				<col style="width:10%;">
+				<!-- <col style="width:10%;"> -->
 				<col style="width:10%;">
 			</colgroup>
 			<thead>
@@ -63,6 +64,7 @@
 					<th scope="col">
 						<label><input type="checkbox" name="isAll" onclick="goAll();"><span></span></label>
 					</th>
+					<th scope="col">API템플릿번호</th>
 					<th scope="col">템플릿명</th>
 					<th scope="col">사용자그룹</th>
 					<th scope="col">사용자명</th>
@@ -71,7 +73,7 @@
 					<th scope="col">등록일시</th>
 					<!-- <th scope="col">발송상태</th> -->
 					<!-- <th scope="col">금칙어</th> -->
-					<th scope="col">연계템플릿번호</th>
+					<!-- <th scope="col">연계템플릿번호</th> -->
 					<th scope="col">수신확인</th>
 				</tr>
 			</thead>
@@ -94,6 +96,7 @@
 								<input type="checkbox" name="workStatus" value="000" style="display:none;">
 								<input type="checkbox" name="apprProcYn" value="<c:out value='${campTemp.approvalProcYn}'/>" style="display:none;">
 							</td>
+							<td><c:out value="${campTemp.tid}"/></td>
 							<td>
 								<c:choose>
 									<c:when test="${'000' eq campTemp.status}">
@@ -155,7 +158,7 @@
 								</c:if>
 							</td>
 							 -->
-							<td><c:out value="${campTemp.eaiCampNo}"/></td>
+							<%-- <td><c:out value="${campTemp.eaiCampNo}"/></td> --%>
 							<td><c:out value="${campTemp.recvChkYn}"/></td>
 						</tr>
 					</c:forEach>
