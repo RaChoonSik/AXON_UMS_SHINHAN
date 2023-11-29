@@ -136,13 +136,18 @@ public class ApiRnsServiceController {
 		String senderemail = "";
 		String messagename = "";
 		String message = "";
-		String attachfile = "";
+		String attachfile01 = "";
+		String attachfile02 = "";
+		String attachfile03 = "";
+		String attachfile04 = "";
+		String attachfile05 = "";
 		
 		String ctnpos ="";
 		String spos = "0"; 
 		String rpos = "0";
 		int subid = 0;
 		
+		String status = "0";
 		if(json.has("requestkey")) {
 			requestkey = StringUtil.setNullToString(json.get("requestkey").toString());
 			if("".equals(requestkey)) {
@@ -185,28 +190,28 @@ public class ApiRnsServiceController {
 				if ("1".equals(requestoption)) {
 					ctnpos ="0";
 				} else if("2".equals(requestoption)) {
-					if(json.has("attachfile")) {
-						attachfile = StringUtil.setNullToString(json.get("attachfile").toString());
-						if("".equals(attachfile)) {
-							sResultmessage += "[ 첨부파일 정보 누락 (message)]";
+					if(json.has("attachfile01")) {
+						attachfile01 = StringUtil.setNullToString(json.get("attachfile01").toString());
+						if("".equals(attachfile01)) {
+							sResultmessage += "[ 첨부파일 정보 누락 (attachfile01)]";
 							sResultcode = "E001";
 						} 
 					} else {
-						sResultmessage += "[ 첨부파일 정보 누락 (message)]";
+						sResultmessage += "[ 첨부파일 정보 누락 (attachfile01)]";
 						sResultcode = "E001";
 					} 
 					ctnpos ="0"; 
 				} else if ("3".equals(requestoption)) {
 					ctnpos ="2";
 				} else if ("4".equals(requestoption)) {
-					if(json.has("attachfile")) {
-						attachfile = StringUtil.setNullToString(json.get("attachfile").toString());
-						if("".equals(attachfile)) {
-							sResultmessage += "[ 첨부파일 정보 누락 (message)]";
+					if(json.has("attachfile01")) {
+						attachfile01 = StringUtil.setNullToString(json.get("attachfile01").toString());
+						if("".equals(attachfile01)) {
+							sResultmessage += "[ 첨부파일 정보 누락 (attachfile01)]";
 							sResultcode = "E001";
 						} 
 					} else {
-						sResultmessage += "[ 첨부파일 정보 누락 (message)]";
+						sResultmessage += "[ 첨부파일 정보 누락 (attachfile01)]";
 						sResultcode = "E001";
 					} 
 					ctnpos ="2";
@@ -322,12 +327,16 @@ public class ApiRnsServiceController {
 		if(json.has("message")) {
 			message = StringUtil.setNullToString(json.get("message").toString());
 			if("".equals(message)) {
+				if("1".equals(requestoption) || "2".equals(requestoption) ) {
+					sResultmessage += "[ 메일 내용 누락 (message)]";
+					sResultcode = "E001";
+				} 
+			} 
+		} else {
+			if("1".equals(requestoption) || "2".equals(requestoption) ) {
 				sResultmessage += "[ 메일 내용 누락 (message)]";
 				sResultcode = "E001";
 			} 
-		} else {
-			sResultmessage += "[ 메일 내용  누락 (message)]";
-			sResultcode = "E001";  
 		}
 		
 		if ("000".equals(sResultcode)) {
@@ -390,6 +399,11 @@ public class ApiRnsServiceController {
 			if(json.has("map14")) {map14 = StringUtil.setNullToString(json.get("map14").toString());}
 			if(json.has("map15")) {map15 = StringUtil.setNullToString(json.get("map15").toString());}
 			
+			if(json.has("attachfile01")) {attachfile01 = StringUtil.setNullToString(json.get("attachfile01").toString());}
+			if(json.has("attachfile02")) {attachfile02 = StringUtil.setNullToString(json.get("attachfile02").toString());}
+			if(json.has("attachfile03")) {attachfile03 = StringUtil.setNullToString(json.get("attachfile03").toString());}
+			if(json.has("attachfile04")) {attachfile04 = StringUtil.setNullToString(json.get("attachfile04").toString());}
+			if(json.has("attachfile05")) {attachfile05 = StringUtil.setNullToString(json.get("attachfile05").toString());}
 			
 			//DB 작업 시작 
 			ApiRnsRecipientInfoVO apiRnsRecipientInfoVO = new ApiRnsRecipientInfoVO();
@@ -422,12 +436,18 @@ public class ApiRnsServiceController {
 			apiRnsRecipientInfoVO.setMap13(map13);
 			apiRnsRecipientInfoVO.setMap14(map14);
 			apiRnsRecipientInfoVO.setMap15(map15);
-			apiRnsRecipientInfoVO.setAttachfile01(attachfile);
-			apiRnsRecipientInfoVO.setRequestKey(requestkey);
+			apiRnsRecipientInfoVO.setAttachfile01(attachfile01);
+			apiRnsRecipientInfoVO.setAttachfile02(attachfile02);
+			apiRnsRecipientInfoVO.setAttachfile03(attachfile03);
+			apiRnsRecipientInfoVO.setAttachfile04(attachfile04);
+			apiRnsRecipientInfoVO.setAttachfile05(attachfile05);
 			
+			apiRnsRecipientInfoVO.setRequestKey(requestkey);
+			apiRnsRecipientInfoVO.setStatus(status);
+			 
 			
 			try {
-				int result = rnsServiceService.insertApiSendTsEmai(apiRnsRecipientInfoVO);
+				int result = rnsServiceService.insertApiSendTsEmail(apiRnsRecipientInfoVO);
 				if (result < 1 ) {
 					sResultcode = "E004";
 					sResultmessage = "데이터 처리 오류";
@@ -436,7 +456,7 @@ public class ApiRnsServiceController {
 					sResultmessage = "Success";
 				}				
 			} catch (Exception e) {
-				logger.error("rnsServiceService.insertApiSendTsEmai error = " + e);
+				logger.error("rnsServiceService.insertApiSendTsEmail error = " + e);
 				sResultcode = "E009"; 
 				sResultmessage = "서버에서 예외처리 오류 발생 : " + e.getMessage();
 				 
@@ -445,7 +465,7 @@ public class ApiRnsServiceController {
 			try {
 				sendApiResultJson(response, requestkey, sResultcode, sResultmessage);
 			} catch (Exception e) {
-				logger.error("rnsServiceService.insertApiSendTsEmai  sendApiResultJson error = " + e);
+				logger.error("rnsServiceService.insertApiSendTsEmail  sendApiResultJson error = " + e);
 			} 
 		}
 	}

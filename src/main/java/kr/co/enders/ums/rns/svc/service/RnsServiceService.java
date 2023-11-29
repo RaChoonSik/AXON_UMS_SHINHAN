@@ -276,5 +276,5 @@ public interface RnsServiceService {
 	 * @return
 	 * @throws Exception
 	 */
-	public int insertApiSendTsEmai(ApiRnsRecipientInfoVO apiRnsRecipientInfoVO) throws Exception;
+	public int insertApiSendTsEmail(ApiRnsRecipientInfoVO apiRnsRecipientInfoVO) throws Exception;
 }

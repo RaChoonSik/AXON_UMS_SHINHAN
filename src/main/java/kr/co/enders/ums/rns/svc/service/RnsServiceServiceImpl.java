@@ -696,7 +696,7 @@ public class RnsServiceServiceImpl implements RnsServiceService {
 	
 
 	@Override
-	public int insertApiSendTsEmai(ApiRnsRecipientInfoVO apiRnsRecipientInfoVO) throws Exception {
+	public int insertApiSendTsEmail(ApiRnsRecipientInfoVO apiRnsRecipientInfoVO) throws Exception {
 		int result = 0;
 		
 		// MailQueue 등록
