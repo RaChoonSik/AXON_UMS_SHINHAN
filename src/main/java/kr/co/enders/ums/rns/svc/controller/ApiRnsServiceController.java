@@ -338,7 +338,7 @@ public class ApiRnsServiceController {
 				sResultcode = "E001";
 			} 
 		}
-		
+		 
 		if ("000".equals(sResultcode)) {
 			try {
 				// 서비스 정보 조회 By EaiCampNo(templatecode)
@@ -350,9 +350,16 @@ public class ApiRnsServiceController {
 					if( templateVO.getTid() != templatecode) {
 						sResultmessage = "[ API캠페인템플릿 정보 없음 (" + templatecode +")]";
 						sResultcode = "E010";
+					} else {
+						if("3".equals(requestoption) || "4".equals(requestoption) ) {
+							message = templateVO.getContentsPath();
+							if(message == null || "".equals(message)) {
+								sResultmessage = "[ API캠페인템플릿 정보 없음 (" + templatecode +")]";
+								sResultcode = "E012";
+							}
+						}
 					}
 				} 
-				
 			} catch (Exception e) {
 				logger.error("rnsServiceService.getSmsTemplate error = " + e);
 				sResultmessage = "[ 서버 데이터 API캠페인템플릿 정보 조회 오류 (" + templatecode +")]";
@@ -441,6 +448,7 @@ public class ApiRnsServiceController {
 			apiRnsRecipientInfoVO.setAttachfile03(attachfile03);
 			apiRnsRecipientInfoVO.setAttachfile04(attachfile04);
 			apiRnsRecipientInfoVO.setAttachfile05(attachfile05);
+			
 			
 			apiRnsRecipientInfoVO.setRequestKey(requestkey);
 			apiRnsRecipientInfoVO.setStatus(status);
