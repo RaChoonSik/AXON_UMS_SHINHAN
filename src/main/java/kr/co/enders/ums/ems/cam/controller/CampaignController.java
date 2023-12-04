@@ -498,7 +498,6 @@ public class CampaignController {
 			logger.error("codeService.getUserList error = " + e);
 		}
 		
-		searchVO.setPage(777);
 		model.addAttribute("searchVO", searchVO);			// 검색항목
 		model.addAttribute("campInfo", campInfo);			// 캠페인 정보
 		model.addAttribute("campTyList", campTyList);		// 캠페인목적 목록
