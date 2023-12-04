@@ -35,6 +35,7 @@
 					<section class="cont-head">
 						<div class="title">
 							<h2>캠페인 정보수정</h2>
+							<h2><c:out value='${searchVO.page}'/></h2>
 						</div>
 
 					</section>
