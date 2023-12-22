@@ -61,7 +61,7 @@
 					<th scope="col">DB종류</th>
 					<th scope="col">상태</th>
 					<th scope="col">권한관리</th>
-<!-- 					<th scope="col">메타정보관리</th> -->
+					<th scope="col">메타정보관리</th>
 <!-- 					<th scope="col">조인정보관리</th> -->
 					<th scope="col">등록자</th>
 					<th scope="col">등록일</th>
@@ -79,7 +79,7 @@
 							<td><c:out value="${dbConn.dbTyNm}" /></td>
 							<td><c:out value="${dbConn.statusNm}" /></td>
 							<td><button type="button" class="btn" value="<c:out value='${dbConn.dbConnNo}'/>" onClick="setGrant(<c:out value='${dbConn.dbConnNo}'/>)">설정</button></td>
-<%-- 							<td><button type="button" class="btn" value="<c:out value='${dbConn.dbConnNo}'/>" onClick="setMeta(<c:out value='${dbConn.dbConnNo}'/>)">설정</button></td> --%>
+							<td><button type="button" class="btn" value="<c:out value='${dbConn.dbConnNo}'/>" onClick="setMeta(<c:out value='${dbConn.dbConnNo}'/>)">설정</button></td>
 <%-- 							<td><button type="button" class="btn" value="<c:out value='${dbConn.dbConnNo}'/>" onClick="setJoin(<c:out value='${dbConn.dbConnNo}'/>)">설정</button></td> --%>
 							<td><c:out value="${dbConn.regNm}" /></td>
 							<td><c:out value="${dbConn.regDt}" /></td>

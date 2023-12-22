@@ -151,6 +151,12 @@ public class DBUtil {
 				sql += "   AND TABNAME NOT LIKE 'TS_%' 		";
 				sql += " ORDER BY TABNAME 						";
 			} else if(Code.DB_VENDOR_POSTGRES.equals(dbTy)) {	//POSTGRES
+				sql =  "SELECT TABLENAME TABLE_NAME 				";
+				sql += "  FROM PG_TABLES ";
+				sql += " WHERE UPPER(TABLEOWNER) = '" +loginId.toUpperCase() + "' ";
+				sql += "   AND UPPER(TABLENAME)NOT LIKE '%NEO_%' 		";
+				sql += "   AND UPPER(TABLENAME) NOT LIKE 'TS_%' 		";
+				sql += " ORDER BY TABLENAME 						";
 			} else {
 				sql = "";
 			}
@@ -273,6 +279,13 @@ public class DBUtil {
 				sql += "  WHERE TABSCHEMA = '" + loginId.toUpperCase() + "'	";
 				sql += "	   AND TABNAME = '" + tblNm + "'";
 			} else if(Code.DB_VENDOR_POSTGRES.equals(dbTy)) {	//POSTGRES
+				sql =  " SELECT table_name TBL_NM,				";
+				sql += "   	   column_name COL_NM,				";
+				sql += "		   data_type COL_DATA_TY,	";
+				sql += "		   '' COL_DATA_TY_JDBC		";
+				sql += "	  FROM information_schema.\"columns\"  ";
+				sql += "  WHERE UPPER(TABLENAME) =UPPER( '" + tblNm + "' )	";  
+				
 			} else {
 				sql = "";
 			}

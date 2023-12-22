@@ -47,9 +47,9 @@
 							</td> 
 						 	<td>
 							 	<c:if test="${ metaColumn.colNo!= 0}">
-									<button type="button" class="btn" value="<c:out value='${metaColumn.colNo}'/>" onclick="goUpdateColumn(this);">수정</button>
-									<button type="button" class="btn" value="<c:out value='${metaColumn.colNo}'/>" onclick="goExtractColumn(this);">추출조건</button>
-									<button type="button" class="btn" value="<c:out value='${metaColumn.colNo}'/>" onclick="goDeleteColumn(this);">삭제</button>
+									<button type="button" class="btn" style="width:70px" value="<c:out value='${metaColumn.colNo}'/>" onclick="goUpdateColumn(this);">수정</button>
+									<button type="button" class="btn" style="width:70px" value="<c:out value='${metaColumn.colNo}'/>" onclick="goExtractColumn(this);">추출조건</button>
+									<button type="button" class="btn" style="width:70px" value="<c:out value='${metaColumn.colNo}'/>" onclick="goDeleteColumn(this);">삭제</button>
 									<button type="button" class="btn" style="display:none;" value="0" onclick="goUpdateColumn(this);">등록</button>	
 							 	</c:if>
 							 	<c:if test="${metaColumn.colNo == 0}">

@@ -148,7 +148,7 @@
 					   <if test="searchEndDt != null and searchEndDt != ''">
 					   AND REG_DT &lt; #{searchEndDt} || '240000'
 					   </if>
-					)
+					) AA 
 				) TT
 		 WHERE SEQ BETWEEN (#{page}-1)*#{rows}+1 AND #{page}*#{rows}
 	</select>	
@@ -182,7 +182,7 @@
 					   <if test="searchEndDt != null and searchEndDt != ''">
 					   AND REG_DT &lt; #{searchEndDt} || '240000'
 					   </if>
-					)
+					) AA
 				) TT
 		 WHERE SEQ BETWEEN (#{page}-1)*#{rows}+1 AND #{page}*#{rows}
 	</select>			
