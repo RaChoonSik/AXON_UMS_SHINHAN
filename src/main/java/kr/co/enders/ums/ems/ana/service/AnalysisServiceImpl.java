@@ -251,6 +251,11 @@ public class AnalysisServiceImpl implements AnalysisService {
 	}
 	
 	@Override
+	public SendLogVO getTSContentsInfo(SendLogVO sendLogVO) throws Exception {
+		return analysisDAO.getTSContentsInfo(sendLogVO);
+	}
+	
+	@Override
 	public List<SendLogVO> getSendLogListExcel(SendLogVO sendLogVO) throws Exception {
 		if ("10".equals(sendLogVO.getSearchServiceGb())) {
 			return analysisDAO.getSendLogListEmsExcel(sendLogVO);

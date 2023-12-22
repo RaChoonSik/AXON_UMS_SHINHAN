@@ -256,6 +256,11 @@ public class AnalysisDAO implements AnalysisMapper {
 	}
 	
 	@Override
+	public SendLogVO getTSContentsInfo(SendLogVO sendLogVO) throws Exception {
+		return sqlSessionEms.getMapper(AnalysisMapper.class).getTSContentsInfo(sendLogVO);
+	}
+	
+	@Override
 	public List<SendLogVO> getSendLogListExcel(SendLogVO sendLogVO) throws Exception {
 		return sqlSessionEms.getMapper(AnalysisMapper.class).getSendLogListExcel(sendLogVO);
 	}
@@ -269,7 +274,6 @@ public class AnalysisDAO implements AnalysisMapper {
 	public List<SendLogVO> getSendLogListRnsExcel(SendLogVO sendLogVO) throws Exception {
 		return sqlSessionEms.getMapper(AnalysisMapper.class).getSendLogListRnsExcel(sendLogVO);
 	}
-	
 	
 	@Override
 	public List<SendLogVO> getCampMailSendListEms(SendLogVO sendLogVO) throws Exception {

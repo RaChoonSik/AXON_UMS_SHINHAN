@@ -390,6 +390,14 @@ public interface AnalysisService {
 	public List<SendLogVO> getCampMailSendList(SendLogVO sendLogVO) throws Exception;
 	
 	/**
+	 * 실시간이메일 DB 컨텐츠 보기 
+	 * @param taskVO
+	 * @return
+	 * @throws Exception
+	 */
+	public SendLogVO getTSContentsInfo(SendLogVO sendLogVO) throws Exception;
+	
+	/**
 	 * 대용량 메일 발송 목록 조회
 	 * @param sendLogVO
 	 * @return

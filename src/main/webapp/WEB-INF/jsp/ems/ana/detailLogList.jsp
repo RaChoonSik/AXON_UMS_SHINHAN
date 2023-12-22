@@ -72,6 +72,7 @@
 				<col style="width:0%;">
 				<col style="width:0%;">
 				<col style="width:0%;"> 
+				<col style="width:0%;">
 			</colgroup>>
 			<thead>
 				<tr>
@@ -93,6 +94,7 @@
 					<th scope="col" class="hide">발송결과코드</th>
 					<th scope="col" class="hide">재발송</th>
 					<th scope="col" class="hide">재발송수신그룹</th>
+					<th scope="col" class="hide">RNS컨텐츠타입</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -156,6 +158,7 @@
 								</c:choose>
 							</td>
 							<td class="hide"><c:out value='${sendLog.segReal}' /></td>
+							<td class="hide"><c:out value='${sendLog.ctnpos}' /></td>
 							<%-- <td class="hide"><c:out value='${sendLog.respAmt}' /></td> --%>
 						</tr>
 					</c:forEach>

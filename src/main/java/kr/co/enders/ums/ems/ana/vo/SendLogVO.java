@@ -117,6 +117,11 @@ public class SendLogVO extends CommonVO {
 	private int segRetry;
 	private int segReal;
 	private String segCreateTy;
+	
+	//RNS 메일 내용 보기용 (TS_MAILQUEUE)
+	private String ctnpos; //컨텐츠 위치(Type) 0, d, D : DB 컨텐츠(Contents field)1 , w, W : 웹 컨텐트 2, f, F : 파일 컨텐트
+	private String contents; //ctnpos가 0,d,D일경우 내용이 TS_MAILQUEUE에 있음 
+	
 	public int getTaskNo() {
 		return taskNo;
 	}
@@ -710,5 +715,17 @@ public class SendLogVO extends CommonVO {
 	}
 	public void setSegCreateTy(String segCreateTy) {
 		this.segCreateTy = segCreateTy;
+	}
+	public String getCtnpos() {
+		return ctnpos;
+	}
+	public void setCtnpos(String ctnpos) {
+		this.ctnpos = ctnpos;
+	}
+	public String getContents() {
+		return contents;
+	}
+	public void setContents(String contents) {
+		this.contents = contents;
 	}
 }

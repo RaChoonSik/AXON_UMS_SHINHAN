@@ -31,6 +31,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import kr.co.enders.ums.com.service.CodeService;
 import kr.co.enders.ums.com.service.CryptoService;
@@ -2363,6 +2364,41 @@ public class AnalysisController {
 		model.addAttribute("perPageList", perPageList);			//개인별페이지
 		
 		return "ems/ana/detailLogList";
+	}
+	
+	/**
+	 * 실시간메일(RNS) DB 컨텐츠  내용 보기 
+	 * @param searchVO
+	 * @param model
+	 * @param request
+	 * @param response
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping(value="/mailContentsView")
+	public ModelAndView goMailContentsView(@ModelAttribute SendLogVO searchVO, Model model, HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+		logger.debug("goMailContentView mid  = " + searchVO.getSubTaskNo());
+		logger.debug("goMailContentView tid  = " + searchVO.getTaskNo());
+	 
+		SendLogVO sendLogVO = null;
+		String contents="본문내용이 없습니다";
+		try {
+			sendLogVO = analysisService.getTSContentsInfo(searchVO);
+		} catch(Exception e) {
+			logger.error("analysisService.getTSContentsInfo error = " + e);
+		} finally {
+			if(sendLogVO != null && !StringUtil.isNull(sendLogVO.getContents()))  {
+				contents = sendLogVO.getContents();
+			}
+		}
+		// jsonView 생성
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("result", "Success");
+		map.put("contVal", sendLogVO.getContents().trim());
+		
+		ModelAndView modelAndView = new ModelAndView("jsonView", map);
+		
+		return modelAndView;
 	}
 	
 	/********************** EXCEL DOWNLOAD **********************/

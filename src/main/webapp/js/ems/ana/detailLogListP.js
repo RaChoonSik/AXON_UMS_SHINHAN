@@ -37,12 +37,14 @@ function goSearch(pageNo) {
 	var endDate = new Date(endDt[0], endDt[1], endDt[2]);
 	var startDate = new Date(startDt[0], startDt[1], startDt[2]);
 	
+	/*
 	var diff = endDate - startDate;
 	var currDay = 24 * 60 * 60 * 1000;// 시 * 분 * 초 * 밀리세컨
 	if ( parseInt(diff/currDay) > 31 ){
 		alert("검색 기간은 1개월 넘길수 없습니다");
 		return;
 	}
+	*/
 	
 	if($("input[name='isSendTerm']").eq(1).is(":checked")) {
 		$("#searchServiceGb").val("20");
@@ -80,6 +82,7 @@ function goMailDetil(taskNo, subTaskNo, attCnt, serviceGb, webAgent, contFlPath,
 	var sendRcode = ""; //발송결과코드
 	var respAmt = "0"; //메읽 읽어본 횟수 
 	var segReal =  0;
+	var ctnpos = ""; //RNS 컨텐츠 타입
 	
 	var selTr = $(obj.parentNode.parentNode); 
 	var sell = $(selTr.children("td"));	 
@@ -114,6 +117,8 @@ function goMailDetil(taskNo, subTaskNo, attCnt, serviceGb, webAgent, contFlPath,
 			respAmt = val;
 		} else if( idx == 17 ){ //대용량개별발송 쿼리 존재여부
 			segReal = val;
+		} else if( idx == 18 ){ //RNS 컨텐츠 타입
+			ctnpos = val;
 		}
 	}
 	
@@ -193,7 +198,11 @@ function goMailDetil(taskNo, subTaskNo, attCnt, serviceGb, webAgent, contFlPath,
 	if (serviceGb == "10") {
 		param = "/ems/cam/mailFileView.ums?contFlPath=" + contFlPath;
 	} else {
-		param = "/rns/svc/mailFileView.ums?contentsPath=" + contFlPath;
+		if (ctnpos == "2" || ctnpos == "f" || ctnpos == "F" ) {
+			param = "/rns/svc/mailFileView.ums?contentsPath=" + contFlPath;
+		} else {
+			param = "/ems/ana/mailContentsView.ums?subTaskNo=" + subTaskNo + "&tid=" + taskNo;
+		}
 	}
 	
 	$.getJSON(param, function(res) {

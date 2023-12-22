@@ -2339,6 +2339,7 @@
 					 , BIZKEY
 					 , SEG_REAL
 					 , RTY_NO
+					 , CTNPOS 
 					 , ROW_NUMBER() OVER (ORDER BY SEND_DT DESC, CUST_ID, CUST_NM) SEQ 
 					 , COUNT(1) OVER() TOTAL_COUNT
 				  FROM
@@ -2371,6 +2372,7 @@
 							 , X.BIZKEY
 							 , 0 SEG_REAL
 							 ,  COALESCE(Y.RTY_MID, 0) RTY_NO
+							 , Y.ctnpos AS CTNPOS
 						  FROM TS_RESULTLOG X
 						 INNER JOIN TS_SERVICETYP C ON (X.TID = C.TID)
 						 INNER JOIN TS_MAILQUEUE Y ON (X.MID = Y.MID AND X.SUBID= Y.SUBID AND X.TID = Y.TID )
@@ -2379,10 +2381,10 @@
 						  LEFT OUTER JOIN TS_RESPONSELOG L ON ( X.MID = L.MID AND X.SUBID = L.SUBID AND X.RID = L.RID )
 						 WHERE 1=1
 						   <if test="searchStartDt != null and searchStartDt != ''">
-						   AND X.STIME &gt;= TO_CHAR(CAST('#{searchStartDt}' AS DATE) , 'YYYY/MM/DD HH24:MI:SS')
+						   AND X.STIME &gt;= TO_CHAR(CAST(#{searchStartDt} AS DATE), 'YYYY/MM/DD HH24:MI:SS')
 						   </if>
 						   <if test="searchEndDt != null and searchEndDt != ''">
-						   AND X.STIME &lt; TO_CHAR((CAST('#{searchEndDt} AS DATE) + integer '1') , 'YYYY/MM/DD HH24:MI:SS')
+						   AND X.STIME &lt; TO_CHAR((CAST(#{searchEndDt} AS DATE) + integer '1'), 'YYYY/MM/DD HH24:MI:SS')
 						   </if>
 		 				   <if test="searchCampNo != null and searchCampNo != 0">
 						   AND C.CAMP_NO = #{searchCampNo}
@@ -2411,6 +2413,14 @@
 					 WHERE NOT EXISTS (SELECT MID FROM TS_MAILQUEUE_TEST RT WHERE RR.SUB_TASK_NO = RT.MID)
 				) TT
 		 WHERE SEQ BETWEEN (#{page}-1)*#{rows}+1 AND #{page}*#{rows}
+	</select>
+	
+	<select id="getTSContentsInfo" parameterType="sendLogVO" resultType="sendLogVO">
+		SELECT COALESCE(CONTENTS , '' ) CONTENTS
+		  FROM TS_MAILQUEUE A
+		 WHERE MID = #{subTaskNo}
+		   AND TID = #{taskNo}
+		 LIMIT 1
 	</select>
 	
 	<select id="getSendLogListExcel" parameterType="sendLogVO" resultType="sendLogVO">

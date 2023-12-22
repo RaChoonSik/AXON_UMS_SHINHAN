@@ -386,6 +386,14 @@ public interface AnalysisMapper {
 	public List<SendLogVO> getSendLogListRns(SendLogVO sendLogVO) throws Exception;
 	
 	/**
+	 * 실시간이메일 DB 컨텐츠 보기 
+	 * @param sendLogVO
+	 * @return
+	 * @throws Exception
+	 */
+	public SendLogVO getTSContentsInfo(SendLogVO sendLogVO) throws Exception;
+	
+	/**
 	 * 대량메일 및 실시간이메일 상세 로그목록 조회
 	 * @param sendLogVO
 	 * @return
