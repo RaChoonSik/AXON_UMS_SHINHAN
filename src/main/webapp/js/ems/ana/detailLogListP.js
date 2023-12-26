@@ -201,7 +201,7 @@ function goMailDetil(taskNo, subTaskNo, attCnt, serviceGb, webAgent, contFlPath,
 		if (ctnpos == "2" || ctnpos == "f" || ctnpos == "F" ) {
 			param = "/rns/svc/mailFileView.ums?contentsPath=" + contFlPath;
 		} else {
-			param = "/ems/ana/mailContentsView.ums?subTaskNo=" + subTaskNo + "&tid=" + taskNo;
+			param = "/ems/ana/mailContentsView.ums?subTaskNo=" + subTaskNo + "&taskNo=" + taskNo;
 		}
 	}
 	
