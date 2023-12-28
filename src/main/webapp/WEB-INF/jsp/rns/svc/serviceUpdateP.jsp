@@ -441,7 +441,8 @@ rnsApprProcYn = "<c:out value='${serviceInfo.approvalProcYn}'/>";
 											});
 								
 											function pasteHTML(obj) {
-												var sHTML = "<img src='<c:url value='/img/upload'/>/"+obj+"'>";
+												//var sHTML = "<img src='<c:url value='/img/upload'/>/"+obj+"'>";
+												var sHTML = "<img src='<c:out value='${DEFAULT_DOMAIN}${DEFAULT_IMG_PATH}'/>"+obj+"'>";
 												oEditors.getById["ir1"].exec("PASTE_HTML", [sHTML]);
 											}
 								
