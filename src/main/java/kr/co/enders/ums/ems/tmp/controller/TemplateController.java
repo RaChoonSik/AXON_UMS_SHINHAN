@@ -301,7 +301,10 @@ public class TemplateController {
 		model.addAttribute("deptList", deptList);			// 부서 목록
 		model.addAttribute("userList", userList);			// 사용자 목록
 		model.addAttribute("statusList", statusList);		// 탬플릿상태 목록
+		
+		//2023.12.28 이미지 관련 추가
 		model.addAttribute("DEFAULT_DOMAIN", properties.getProperty("IMG.DEFAULT_DOMAIN"));
+		model.addAttribute("DEFAULT_IMG_PATH", properties.getProperty("IMG.DEFAULT_IMG_PATH"));
 		
 		return "ems/tmp/tempAddP";
 	}
@@ -457,7 +460,10 @@ public class TemplateController {
 		model.addAttribute("userList", userList);			// 사용자 목록
 		model.addAttribute("statusList", statusList);		// 탬플릿상태 목록
 		model.addAttribute("tempInfo", templateVO);			// 탬플릿 정보
+		
+		//2023.12.28 이미지 관련 추가
 		model.addAttribute("DEFAULT_DOMAIN", properties.getProperty("IMG.DEFAULT_DOMAIN"));
+		model.addAttribute("DEFAULT_IMG_PATH", properties.getProperty("IMG.DEFAULT_IMG_PATH"));
 		
 		return "ems/tmp/tempUpdateP";
 	}

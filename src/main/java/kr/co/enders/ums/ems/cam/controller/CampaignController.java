@@ -1034,6 +1034,10 @@ public class CampaignController {
 		model.addAttribute("cellNodeId", "");		// API 요청 고객군아디이
 		model.addAttribute("contId", "");				// API 요청 컨텐츠아이디
 		
+		//2023.12.28 이미지 관련 추가
+		model.addAttribute("DEFAULT_DOMAIN", properties.getProperty("IMG.DEFAULT_DOMAIN"));
+		model.addAttribute("DEFAULT_IMG_PATH", properties.getProperty("IMG.DEFAULT_IMG_PATH"));
+		 
 		return "ems/cam/campTempAddP";
 	}
 	
@@ -1584,7 +1588,6 @@ public class CampaignController {
 		} catch(Exception e) {
 			logger.error("segmentService.getSegmentList error = " + e);
 		}
-
 		
 		model.addAttribute("searchVO", searchVO);					// 검색항목
 		model.addAttribute("campTempInfo", campaignTemplateInfo);	// 서비스정보
@@ -1597,6 +1600,11 @@ public class CampaignController {
 		model.addAttribute("segList", segList);						// 수신자그룹리스트
 		model.addAttribute("testSendAuth", testSendAuth);			// 기능권한 : 테스트발송
 		model.addAttribute("envSetAuth", envSetAuth);				// 기능권한 : 고객정보체크
+		
+		//2023.12.28 이미지 관련 추가
+		model.addAttribute("DEFAULT_DOMAIN", properties.getProperty("IMG.DEFAULT_DOMAIN"));
+		model.addAttribute("DEFAULT_IMG_PATH", properties.getProperty("IMG.DEFAULT_IMG_PATH"));
+		
 		
 		return "ems/cam/campTempUpdateP";
 	}
@@ -3226,7 +3234,10 @@ public class CampaignController {
 		model.addAttribute("CONN_PER_CNT", properties.getProperty("CONN_PER_CNT"));
 		model.addAttribute("RETRY_CNT", properties.getProperty("RETRY_CNT"));
 		model.addAttribute("MAIL_ENCODING", properties.getProperty("MAIL_ENCODING"));
+		
+		//2023.12.28 이미지 관련 추가		
 		model.addAttribute("DEFAULT_DOMAIN", properties.getProperty("IMG.DEFAULT_DOMAIN"));
+		model.addAttribute("DEFAULT_IMG_PATH", properties.getProperty("IMG.DEFAULT_IMG_PATH"));
 		
 		//환경설정 관련 정보 조회용 항목 추가 
 		String userInfoCharSetNm = "코드정보없음";
@@ -3766,6 +3777,11 @@ public class CampaignController {
 		model.addAttribute("reasonList", reasonList);		// 조회사유코드 목록
 		model.addAttribute("orgList", orgList);				// 조직목록
 		
+		//2023.12.28 이미지 관련 추가
+		model.addAttribute("DEFAULT_DOMAIN", properties.getProperty("IMG.DEFAULT_DOMAIN"));
+		model.addAttribute("DEFAULT_IMG_PATH", properties.getProperty("IMG.DEFAULT_IMG_PATH"));
+		
+		
 		return "ems/cam/mailUpdateP";
 	}
 	
@@ -4122,7 +4138,11 @@ public class CampaignController {
 		model.addAttribute("mktGbList", mktGbList);			// 마케팅수신동의유형
 		model.addAttribute("reasonList", reasonList);		// 조회사유코드 목록
 		model.addAttribute("orgList", orgList);				// 조직목록
+		
+		//2023.12.28 이미지 관련 추가
 		model.addAttribute("DEFAULT_DOMAIN", properties.getProperty("IMG.DEFAULT_DOMAIN"));
+		model.addAttribute("DEFAULT_IMG_PATH", properties.getProperty("IMG.DEFAULT_IMG_PATH"));
+		
 		
 		//환경설정 관련 정보 조회용 항목 추가 
 		String userInfoCharSetNm = "코드정보없음";
@@ -4597,7 +4617,10 @@ public class CampaignController {
 		model.addAttribute("mktGbList", mktGbList);			// 마케팅수신동의유형
 		model.addAttribute("reasonList", reasonList);		// 조회사유코드 목록
 		model.addAttribute("orgList", orgList);				// 조직목록
+		
+		//2023.12.28 이미지 관련 추가
 		model.addAttribute("DEFAULT_DOMAIN", properties.getProperty("IMG.DEFAULT_DOMAIN"));
+		model.addAttribute("DEFAULT_IMG_PATH", properties.getProperty("IMG.DEFAULT_PATH"));
 		
 		//환경설정 관련 정보 조회용 항목 추가 
 		String userInfoCharSetNm = "코드정보없음";
@@ -7218,7 +7241,10 @@ public class CampaignController {
 		logger.debug("goPopTempAdd searchTempNm  = " + searchVO.getSearchTempNm());
 		
 		model.addAttribute("searchVO", searchVO);		// 검색항목
+		
+		//2023.12.28 이미지 관련 추가
 		model.addAttribute("DEFAULT_DOMAIN", properties.getProperty("IMG.DEFAULT_DOMAIN"));
+		model.addAttribute("DEFAULT_IMG_PATH", properties.getProperty("IMG.DEFAULT_IMG_PATH"));
 		
 		return "ems/cam/pop/popTempAdd";
 	}
@@ -7261,7 +7287,10 @@ public class CampaignController {
 		model.addAttribute("searchVO", searchVO);		// 검색항목
 		model.addAttribute("tempInfo", tempInfo);		// 탬플릿정보
 		model.addAttribute("statusList", statusList);	// 탬플릿상태
+		
+		//2023.12.28 이미지 관련 추가
 		model.addAttribute("DEFAULT_DOMAIN", properties.getProperty("IMG.DEFAULT_DOMAIN"));
+		model.addAttribute("DEFAULT_IMG_PATH", properties.getProperty("IMG.DEFAULT_IMG_PATH"));
 		
 		return "ems/cam/pop/popTempUpdate";
 	}

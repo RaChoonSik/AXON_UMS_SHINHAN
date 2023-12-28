@@ -2329,7 +2329,7 @@
 					 , CUST_NM
 					 , SEND_RCODE
 					 , SEND_RCODE_NM
-					 , ATTCH_CNT
+					 , ATT_CNT
 					 , SERVICE_GB
 					 , CONT_FL_PATH
 					 , WEB_AGENT
@@ -2362,7 +2362,13 @@
 							 , X.RNAME CUST_NM
 							 , X.RCODE SEND_RCODE
 							 , (SELECT CD_DESC FROM TS_RCODE WHERE UILANG = #{uilang} AND X.RCODE = RCODE ) SEND_RCODE_NM
-							 , C.ATTCH_CNT
+							 , ( 
+								  ( CASE WHEN coalesce( CASE WHEN  Y.attachfile01  IS NULL THEN '' ELSE  Y.attachfile01  END , '' ) = '' THEN 0 ELSE 1 END )
+								+ ( CASE WHEN coalesce( CASE WHEN  Y.attachfile02  IS NULL THEN '' ELSE  Y.attachfile02  END , '' ) = '' THEN 0 ELSE 1 END )
+								+ ( CASE WHEN coalesce( CASE WHEN  Y.attachfile03  IS NULL THEN '' ELSE  Y.attachfile03  END , '' ) = '' THEN 0 ELSE 1 END )
+								+ ( CASE WHEN coalesce( CASE WHEN  Y.attachfile04  IS NULL THEN '' ELSE  Y.attachfile04  END , '' ) = '' THEN 0 ELSE 1 END )
+								+ ( CASE WHEN coalesce( CASE WHEN  Y.attachfile05  IS NULL THEN '' ELSE  Y.attachfile05  END , '' ) = '' THEN 0 ELSE 1 END )
+							   ) ATT_CNT 
 							 , '20' SERVICE_GB
 							 , C.CONTENTS_PATH CONT_FL_PATH
 							 , (SELECT COALESCE(SOURCE_URL, '') FROM TS_WEBAGENT WHERE TID = X.TID) WEB_AGENT
@@ -2663,7 +2669,13 @@
 			 , X.RNAME CUST_NM
 			 , X.RCODE SEND_RCODE
 			 , (SELECT CD_DESC FROM TS_RCODE WHERE UILANG = #{uilang} AND X.RCODE = RCODE ) SEND_RCODE_NM
-			 , C.ATTCH_CNT
+			 , ( 
+				  ( CASE WHEN coalesce( CASE WHEN  Y.attachfile01  IS NULL THEN '' ELSE  Y.attachfile01  END , '' ) = '' THEN 0 ELSE 1 END )
+				+ ( CASE WHEN coalesce( CASE WHEN  Y.attachfile02  IS NULL THEN '' ELSE  Y.attachfile02  END , '' ) = '' THEN 0 ELSE 1 END )
+				+ ( CASE WHEN coalesce( CASE WHEN  Y.attachfile03  IS NULL THEN '' ELSE  Y.attachfile03  END , '' ) = '' THEN 0 ELSE 1 END )
+				+ ( CASE WHEN coalesce( CASE WHEN  Y.attachfile04  IS NULL THEN '' ELSE  Y.attachfile04  END , '' ) = '' THEN 0 ELSE 1 END )
+				+ ( CASE WHEN coalesce( CASE WHEN  Y.attachfile05  IS NULL THEN '' ELSE  Y.attachfile05  END , '' ) = '' THEN 0 ELSE 1 END )
+			   ) ATT_CNT 
 			 , '20' SERVICE_GB
 			 , C.CONTENTS_PATH CONT_FL_PATH
 			 , (SELECT COALESCE(SOURCE_URL, '') FROM TS_WEBAGENT WHERE TID = X.TID) WEB_AGENT

@@ -83,7 +83,8 @@
 								});
 					
 								function pasteHTML(obj) {
-									var sHTML = "<img src='<c:out value='${DEFAULT_DOMAIN}'/>/img/upload/"+obj+"'>";
+									//var sHTML = "<img src='<c:out value='${DEFAULT_DOMAIN}'/>/img/upload/"+obj+"'>";
+									var sHTML = "<img src='<c:out value='${DEFAULT_DOMAIN}${DEFAULT_IMG_PATH}'/>"+obj+"'>";
 									oEditors2.getById["ir2"].exec("PASTE_HTML", [sHTML]);
 								}
 					

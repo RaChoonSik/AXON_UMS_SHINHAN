@@ -316,7 +316,8 @@ campTempStatus = "<c:out value='${campTempInfo.status}'/>";
 																});
 
 														function pasteHTML(obj) {
-															var sHTML = "<img src='<c:out value='${DEFAULT_DOMAIN}'/>/img/upload/"
+															//var sHTML = "<img src='<c:out value='${DEFAULT_DOMAIN}'/>/img/upload/"
+																var sHTML = "<img src='<c:out value='${DEFAULT_DOMAIN}${DEFAULT_IMG_PATH}'/>"
 																	+ obj
 																	+ "'>";
 															oEditors.getById["ir1"]

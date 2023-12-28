@@ -10,7 +10,7 @@
 	String filename1 = "";
 	int maxSize = 1024*1024*5;
 	String encType = "utf-8";
-	String savefile = "img";
+	String savefile = "emsservice/img";
 	ServletContext scontext = pageContext.getServletContext();
 	realFolder = scontext.getRealPath(savefile)+"/upload";
  
