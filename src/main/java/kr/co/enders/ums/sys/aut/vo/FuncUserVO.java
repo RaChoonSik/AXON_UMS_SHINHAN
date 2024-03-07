@@ -21,8 +21,9 @@ public class FuncUserVO {
 	private String positionNm;	// 직급명
 	private String jobGb;		// 직책코드
 	private String jobNm;		// 직책명 
-	private String uilang;		// UI언어권
-	
+	private String uilang;		// UI언어권 
+	//신한 소스 맞춤 24.03.06
+	private String copyUserId; 	//복사할 사용자ID 
 	
 	public String getFuncCd() {
 		return funcCd;
@@ -114,5 +115,13 @@ public class FuncUserVO {
 	public void setUilang(String uilang) {
 		this.uilang = uilang;
 	}
+	public String getCopyUserId() {
+		return copyUserId;
+	}
+	//신한 소스 맞춤 24.03.06
+	public void setCopyUserId(String copyUserId) {
+		this.copyUserId = copyUserId;
+	}
+	
 	
 }

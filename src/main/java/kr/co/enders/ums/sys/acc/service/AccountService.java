@@ -18,9 +18,13 @@ import kr.co.enders.ums.sys.acc.vo.ComplianceVO;
 import kr.co.enders.ums.sys.acc.vo.DeptProgVO;
 import kr.co.enders.ums.sys.acc.vo.DeptVO;
 import kr.co.enders.ums.sys.acc.vo.UserVO;
+import kr.co.enders.ums.sys.aut.vo.FuncUserVO;
+import kr.co.enders.ums.sys.aut.vo.MenuUserMappVO;
+import kr.co.enders.ums.sys.dbc.vo.DbConnUserVO;
 import kr.co.enders.ums.sys.acc.vo.OrganizationVO;
 import kr.co.enders.ums.sys.acc.vo.ServiceVO;
 import kr.co.enders.ums.sys.acc.vo.UserProgVO;
+import kr.co.enders.ums.sys.acc.vo.UserServiceVO;
 import kr.co.enders.ums.sys.acc.vo.UserOrgVO;
 
 @Service
@@ -503,6 +507,9 @@ public interface AccountService {
 	 * @return
 	 * @throws Exception
 	 */
-	public UserVO sendInitUserPwdMail(UserVO userVO) throws Exception;	
+	public UserVO sendInitUserPwdMail(UserVO userVO) throws Exception;
 	
+	// SHINHAN SSO USER 자동 생성 처리 : 신한 소스 맞춤 24.03.06
+	public int copyUserInfoVO(UserVO copyUserInfoVO)  throws Exception;
+
 }

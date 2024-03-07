@@ -24,6 +24,8 @@ public class DbConnUserVO extends CommonVO {
 	private String jobGb;		// 직책코드
 	private String jobNm;		// 직책명 
 	private String uilang;		// UI언어권
+	//신한 소스 맞춤 24.03.06
+	private String copyUserId; 	//복사할 사용자ID 
 	
 	public int getDbConnNo() {
 		return dbConnNo;
@@ -115,5 +117,14 @@ public class DbConnUserVO extends CommonVO {
 	public void setUilang(String uilang) {
 		this.uilang = uilang;
 	}
+	//신한 소스 맞춤 24.03.06
+	public String getCopyUserId() {
+		return copyUserId;
+	}
+	public void setCopyUserId(String copyUserId) {
+		this.copyUserId = copyUserId;
+	}
+	
+	
 
 }

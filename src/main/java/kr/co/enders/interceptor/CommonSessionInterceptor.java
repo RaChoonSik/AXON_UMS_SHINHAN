@@ -14,6 +14,9 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+//신한 소스 맞춤 24.03.06
+//import com.rathontech.sso.sp.agent.web.WebAgent;
+
 import kr.co.enders.ums.ems.apr.service.SecuApprovalLineService;
 import kr.co.enders.ums.lgn.service.LoginService;
 import kr.co.enders.ums.main.service.MainService;
@@ -69,10 +72,19 @@ public class CommonSessionInterceptor extends HandlerInterceptorAdapter {
 		// 사용자 세션 체크
 		if(session.getAttribute("NEO_USER_ID") == null || "".equals((String)session.getAttribute("NEO_USER_ID"))) {
 			
-			if(requestUri.indexOf("/index.ums") >= 0 || requestUri.indexOf("/service.ums") >= 0) {
-				response.sendRedirect(contextRoot + "/lgn/lgnP.ums");
+			if(requestUri.indexOf("/index.ums") >= 0 || requestUri.indexOf("/service.ums") >= 0) { 
+				response.sendRedirect(contextRoot + "/lgn/lgnP.ums"); 
 			} else {
-				response.sendRedirect(contextRoot + "/lgn/timeout.ums");
+				if ( session.getAttribute("NEO_SSO_LOGIN") != null) {
+				  if("Y".equals((String)session.getAttribute("NEO_SSO_LOGIN"))){
+					    //신한 소스 맞춤 24.03.06
+					    //new WebAgent().redirectLogout(request, response); 
+					  	response.sendRedirect(contextRoot + "/lgn/timeout.ums"); 
+				  } else { 
+						response.sendRedirect(contextRoot + "/lgn/timeout.ums"); 
+				  }
+				} 
+				
 			}
 			result = false;
 			//다중접속관련
@@ -85,6 +97,7 @@ public class CommonSessionInterceptor extends HandlerInterceptorAdapter {
 			response.setDateHeader("Expires", 0);
 			
 			// 사용자 정보 보안
+			/*
 			try {
 				String oathYmd = loginService.isOathUser((String)session.getAttribute("NEO_USER_ID"));
 				String apiPageLogin = "N"; 
@@ -103,7 +116,7 @@ public class CommonSessionInterceptor extends HandlerInterceptorAdapter {
 			} catch (Exception e) {
 				logger.error("loginService.isOathUser Error = " + e);
 			}
-			
+			*/
 			session.setAttribute("NEO_USER_OATH", "Y");
 			
 			//서약서 확인 여부에 따라 계속 쫓아내기

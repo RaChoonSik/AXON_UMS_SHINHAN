@@ -15,6 +15,9 @@ import kr.co.enders.ums.sys.acc.vo.ComplianceVO;
 import kr.co.enders.ums.sys.acc.vo.DeptProgVO;
 import kr.co.enders.ums.sys.acc.vo.DeptVO;
 import kr.co.enders.ums.sys.acc.vo.UserVO;
+import kr.co.enders.ums.sys.aut.vo.FuncUserVO;
+import kr.co.enders.ums.sys.aut.vo.MenuUserMappVO;
+import kr.co.enders.ums.sys.dbc.vo.DbConnUserVO;
 import kr.co.enders.ums.sys.acc.vo.OrganizationVO;
 import kr.co.enders.ums.sys.acc.vo.ServiceVO;
 import kr.co.enders.ums.sys.acc.vo.UserProgVO;
@@ -444,6 +447,47 @@ public interface AccountMapper {
 	 * @return
 	 * @throws Exception
 	 */
-	public int updateUserOath(String userId) throws Exception;	
+	public int updateUserOath(String userId) throws Exception;
+	
+	/**
+	 * 복사 사용자 정보 
+	 * @param userVO
+	 * @return
+	 * @throws Exception
+	 */	
+	public int copyUserInfo(UserVO userVO)  throws Exception;	
+	
+	/**
+	 * 복사 사용자 조직 
+	 * @param userOrgVO
+	 * @return
+	 * @throws Exception
+	 */	
+	public int copyUserOrgInfo(UserOrgVO userOrgVO)  throws Exception;	
+ 
+	/**
+	 * 복사 사용자 기능
+	 * @param funcUserVO
+	 * @return
+	 * @throws Exception
+	 */	
+	public int copyFuncPermAuthInfo(FuncUserVO funcUserVO)  throws Exception;	
+ 
+	/**
+	 * 복사 사용자 메뉴
+	 * @param userProgVO
+	 * @return
+	 * @throws Exception
+	 */	
+	public int copyUserServiceInfo(UserProgVO userProgVO)  throws Exception;	
+ 
+	/**
+	 * 복사 사용자 메뉴
+	 * @param menuUserMappVO
+	 * @return
+	 * @throws Exception
+	 */	
+	public int copyMenuUserMappInfo(MenuUserMappVO menuUserMappVO)  throws Exception;
+ 
 	
 }

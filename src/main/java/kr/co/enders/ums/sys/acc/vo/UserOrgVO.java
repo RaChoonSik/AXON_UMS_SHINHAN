@@ -23,6 +23,10 @@ public class UserOrgVO implements Serializable {
 	private String regDt;		// 등록일시
 	private String regNm;		// 등록자이름
 	private String upNm;		// 수정자이름
+	
+	//신한 소스 맞춤 24.03.06
+	private String copyUserId; 	//복사할 사용자ID 
+	
 	public String getUserId() {
 		return userId;
 	}
@@ -86,6 +90,11 @@ public class UserOrgVO implements Serializable {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-	
- 
+	//신한 소스 맞춤 24.03.06
+	public String getCopyUserId() {
+		return copyUserId;
+	}
+	public void setCopyUserId(String copyUserId) {
+		this.copyUserId = copyUserId;
+	}
 }

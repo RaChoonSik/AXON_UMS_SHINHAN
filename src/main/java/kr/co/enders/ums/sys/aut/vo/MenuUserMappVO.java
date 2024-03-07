@@ -52,6 +52,8 @@ public class MenuUserMappVO extends CommonVO {
 	private String lv2Nm;
 	private String lv3Nm;
 	private String mappYn; 
+	//신한 소스 맞춤 24.03.06
+	private String copyUserId; 	//복사할 사용자ID 
 	
 	public String getMenuId() {
 		return menuId;
@@ -293,6 +295,13 @@ public class MenuUserMappVO extends CommonVO {
 	public void setMappYn(String mappYn) {
 		this.mappYn = mappYn;
 	}
-	 
+	public String getCopyUserId() {
+		return copyUserId;
+	}
+	public void setCopyUserId(String copyUserId) {
+		this.copyUserId = copyUserId;
+	}
+	
+	
 
 }

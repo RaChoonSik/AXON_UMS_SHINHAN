@@ -23,6 +23,8 @@ import kr.co.enders.ums.sys.acc.vo.ServiceVO;
 import kr.co.enders.ums.sys.acc.vo.UserOrgVO;
 import kr.co.enders.ums.sys.acc.vo.UserProgVO;
 import kr.co.enders.ums.sys.acc.vo.UserVO;
+import kr.co.enders.ums.sys.aut.vo.FuncUserVO;
+import kr.co.enders.ums.sys.aut.vo.MenuUserMappVO;
 
 @Service
 public class AccountServiceImpl implements AccountService {
@@ -296,5 +298,69 @@ public class AccountServiceImpl implements AccountService {
 	@Override
 	public UserVO sendInitUserPwdMail(UserVO userVO) throws Exception {
 		return accountDAO.sendInitUserPwdMail(userVO);
+	} 
+	
+	@Override
+	public int copyUserInfoVO(UserVO copyUserInfoVO) throws Exception {
+		int result = -1;
+		
+		result = accountDAO.copyUserInfo(copyUserInfoVO);
+		if(result < 1 ) {
+			return result;
+		}
+		
+		UserOrgVO copyUserOrgVO= new UserOrgVO();
+		copyUserOrgVO.setUserId(copyUserInfoVO.getUserId());
+		copyUserOrgVO.setCopyUserId(copyUserInfoVO.getCopyUserId());
+		result = accountDAO.copyUserOrgInfo(copyUserOrgVO);
+		if(result < 1 ) {
+			return result;
+		}
+		
+		UserProgVO copyUserProgVO = new UserProgVO();
+		copyUserProgVO.setUserId(copyUserInfoVO.getUserId());
+		copyUserProgVO.setCopyUserId(copyUserInfoVO.getCopyUserId());
+		result = accountDAO.copyUserServiceInfo(copyUserProgVO);
+		if(result < 1 ) {
+			return result;
+		}
+		
+		MenuUserMappVO copyMenuUserMappVO = new MenuUserMappVO();
+		copyMenuUserMappVO.setUserId(copyUserInfoVO.getUserId());
+		copyMenuUserMappVO.setCopyUserId(copyUserInfoVO.getCopyUserId());
+		result = accountDAO.copyMenuUserMappInfo(copyMenuUserMappVO);
+		if(result < 1 ) {
+			return result;
+		}
+		
+		
+		//사요ㅈ
+		//public UserOrgVO copyUserInfo(UserVO copyUserInfoVO)  throws Exception;	NEO_USER 
+		
+		/*//조직 UserOrgVO
+		public UserOrgVO copyUserOrgVO(UserOrgVO UserOrgVO)  throws Exception;	NEO_USERORG_MAPP
+		
+		//기능 FuncUserVO
+		public FuncUserVO copyFuncUserVO(FuncUserVO funcUserVO)  throws Exception;	neo_func_perm
+
+		
+		//메뉴  UserProgVO
+		public UserProgVO copyUserServiceVO(UserProgVO userProgVO)  throws Exception;	neo_user_prog
+
+		
+		//DB 연결 :DbCOnnUserVO
+		public DbConnUserVO copyDbConnUserVO(DbConnUserVO dbConnUserVO)  throws Exception;	neo_dbconn_perm
+
+		
+		//메뉴 사용 자 : MenuUserMappVO
+		public MenuUserMappVO copyMenuUserMapp(MenuUserMappVO menuUserMappVO)  throws Exception; neo_menuuser_mapp
+
+		*/
+		 
+		
+		return result;
+		
 	}
+	
+	
 }

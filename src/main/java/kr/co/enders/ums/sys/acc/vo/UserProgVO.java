@@ -22,6 +22,9 @@ public class UserProgVO implements Serializable {
 	private String progDomain;	// 프로그램도메인
 	private String progScript;	// 수행스크립트
 	
+	//신한 소스 맞춤 24.03.06
+	private String copyUserId; 	//복사할 사용자ID 
+	
 	//처리위한 추가정보 
 	private String regDt;		// 등록일
 	private String regId;		// 등록자
@@ -68,6 +71,13 @@ public class UserProgVO implements Serializable {
 	public void setProgScript(String progScript) {
 		this.progScript = progScript;
 	}
+	//신한 소스 맞춤 24.03.06
+	public String getCopyUserId() {
+		return copyUserId;
+	}
+	public void setCopyUserId(String copyUserId) {
+		this.copyUserId = copyUserId;
+	}
 	public String getRegDt() {
 		return regDt;
 	}
@@ -79,6 +89,9 @@ public class UserProgVO implements Serializable {
 	}
 	public void setRegId(String regId) {
 		this.regId = regId;
+	}
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 	
 	

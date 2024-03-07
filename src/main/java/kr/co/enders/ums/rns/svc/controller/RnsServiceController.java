@@ -2576,7 +2576,8 @@ public class RnsServiceController {
 			}
 		}
 	}
-	
+	*/
+	//신한 소스 맞춤 24.03.06 ( 신한소스에서는 주석이 풀여 있음)
 	public static void sendApiResultJson(HttpServletResponse response, String sRequestkey, String sResultcode, String sResultmessage, int nPagenumber, int nTotalpageNumber, int nPagesize) throws Exception {
 		
 		PrintWriter writer;
@@ -2601,6 +2602,5 @@ public class RnsServiceController {
 		
 		writer.flush();
 		writer.close();
-	}
-	*/
+	} 
 }

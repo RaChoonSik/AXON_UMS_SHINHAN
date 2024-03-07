@@ -23,6 +23,9 @@ import kr.co.enders.ums.sys.acc.vo.ServiceVO;
 import kr.co.enders.ums.sys.acc.vo.UserOrgVO;
 import kr.co.enders.ums.sys.acc.vo.UserProgVO;
 import kr.co.enders.ums.sys.acc.vo.UserVO;
+import kr.co.enders.ums.sys.aut.vo.FuncUserVO;
+import kr.co.enders.ums.sys.aut.vo.MenuUserMappVO;
+import kr.co.enders.ums.sys.dbc.vo.DbConnUserVO;
 
 @Repository
 public class AccountDAO implements AccountMapper {
@@ -282,5 +285,35 @@ public class AccountDAO implements AccountMapper {
 	@Override
 	public UserVO sendInitUserPwdMail(UserVO userVO) throws Exception {
 		return sqlSessionEms.getMapper(AccountMapper.class).sendInitUserPwdMail(userVO);
+	}
+
+	//*************** 신한 EZ SSO 사용자 관련 : //신한 소스 맞춤 24.03.06*************************//
+	//사용자정보 FuncUserVO
+	@Override
+	public int copyUserInfo(UserVO userVO) throws Exception{
+		return sqlSessionEms.getMapper(AccountMapper.class).copyUserInfo(userVO);
+	} 
+	
+	@Override
+	public int copyUserOrgInfo(UserOrgVO UserOrgVO)  throws Exception{
+		return sqlSessionEms.getMapper(AccountMapper.class).copyUserOrgInfo(UserOrgVO);
+	}	 
+	
+	//기능 FuncUserVO
+	@Override
+	public int copyFuncPermAuthInfo(FuncUserVO funcUserVO)  throws Exception{
+		return sqlSessionEms.getMapper(AccountMapper.class).copyFuncPermAuthInfo(funcUserVO);
+	}
+	
+	//메뉴  UserProgVO
+	@Override
+	public int copyUserServiceInfo(UserProgVO userProgVO)  throws Exception{
+		return sqlSessionEms.getMapper(AccountMapper.class).copyUserServiceInfo(userProgVO);
 	}	
+	
+	//메뉴 사용 자 : MenuUserMappVO
+	@Override
+	public int copyMenuUserMappInfo(MenuUserMappVO menuUserMappVO)  throws Exception{
+		return sqlSessionEms.getMapper(AccountMapper.class).copyMenuUserMappInfo(menuUserMappVO);
+	}
 }

@@ -18,6 +18,9 @@ public class UserServiceVO implements Serializable {
 	private String smsYn;		// 사용자명
 	private String tnsYn;		// 사용자명
 	
+	//신한 소스 맞춤 24.03.06
+	private String copyUserId; 	//복사할 사용자ID 
+	
 	public String getEmsYn() {
 		return emsYn;
 	}
@@ -42,5 +45,13 @@ public class UserServiceVO implements Serializable {
 	public void setTnsYn(String tnsYn) {
 		this.tnsYn = tnsYn;
 	}
+	//신한 소스 맞춤 24.03.06
+	public String getCopyUserId() {
+		return copyUserId;
+	}
+	public void setCopyUserId(String copyUserId) {
+		this.copyUserId = copyUserId;
+	}
+	
  
 }

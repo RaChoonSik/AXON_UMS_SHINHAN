@@ -477,6 +477,7 @@ public class CampaignServiceImpl implements CampaignService {
 		}
 		
 		// 준법 감시 정보가 있을 경우 
+		/* 신한 소스 맞춤 24.03.06
 		if( "002".equals(taskVO.getProhibitChkTyp())){
 			if(!StringUtil.isNull(taskVO.getProhibitUserId())) {
 				String[] prohibitUserStr = taskVO.getProhibitUserId().split(",");
@@ -528,7 +529,7 @@ public class CampaignServiceImpl implements CampaignService {
 				}
 			} 
 		}
-		
+		 */
 		// 발송결과종별정보 등록
 		if(!StringUtil.isNull(taskVO.getSndTpeGb())) {
 			EmailClinicVO emailClinic = new EmailClinicVO();
@@ -728,7 +729,7 @@ public class CampaignServiceImpl implements CampaignService {
 				result += campaignDAO.insertApprovalLine(apprLine);
 			}
 		}
-		
+		/* 신한 소스 맞춤 24.03.06
 		String prohibitDesc = "";
 		List<ProhibitWordVO> prohibitWordList = campaignDAO.getProhibitWordList(taskVO.getTaskNo());
 		if(prohibitWordList != null && prohibitWordList.size() > 0) {
@@ -745,7 +746,7 @@ public class CampaignServiceImpl implements CampaignService {
 				result += campaignDAO.insertProhibitWord(prohibitWord);
 			}
 		}
-		
+		*/
 		return result;
 	}
 
@@ -1129,6 +1130,7 @@ public class CampaignServiceImpl implements CampaignService {
 		}
 		
 		// 준법 감시 정보가 있을 경우 
+		/* 신한 소스 맞춤 24.03.06
 		if( "002".equals(taskVO.getProhibitChkTyp())){
 			if(!StringUtil.isNull(taskVO.getProhibitUserId())) {
 				String[] prohibitUserStr = taskVO.getProhibitUserId().split(",");
@@ -1176,7 +1178,7 @@ public class CampaignServiceImpl implements CampaignService {
 					}
 				}
 			} 
-		}	
+		}	*/
 		// 발송결과종별정보 조회
 		EmailClinicVO emailClinicVO = campaignDAO.getEmailClinicInfo(taskVO.getTaskNo());
 		if(emailClinicVO != null) {

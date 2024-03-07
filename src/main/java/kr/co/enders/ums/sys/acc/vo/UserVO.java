@@ -108,6 +108,10 @@ public class UserVO extends CommonVO {
 	private String ipaddrchkYn;	//IP주소체크여부
 	private String lstaccessDt;	//최종접속일자
 	private String lstaccessIp;	//최종접속아디피
+	
+	//신한 소스 맞춤 24.03.06
+	private String copyUserId;	//복사할 사용자 아이디 
+	
 	public String getUserId() {
 		return userId;
 	}
@@ -600,4 +604,13 @@ public class UserVO extends CommonVO {
 	public void setLstaccessIp(String lstaccessIp) {
 		this.lstaccessIp = lstaccessIp;
 	}
+	//신한 소스 맞춤 24.03.06
+	public String getCopyUserId() {
+		return copyUserId;
+	}
+	public void setCopyUserId(String copyUserId) {
+		this.copyUserId = copyUserId;
+	}
+	 
 }
+

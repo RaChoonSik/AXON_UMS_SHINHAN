@@ -27,6 +27,9 @@ import com.nets.sso.agent.authcheck.AuthCheck;
 import com.nets.sso.common.AgentException;
 import com.nets.sso.common.AgentExceptionCode;
 import com.nets.sso.common.enums.AuthStatus;
+//신한 소스 맞춤 24.03.06
+//import com.rathontech.sso.sp.agent.web.WebAgent;
+//import com.rathontech.sso.sp.config.Env; 
 
 import kr.co.enders.ums.com.service.CryptoService;
 import kr.co.enders.ums.lgn.service.LoginService;
@@ -35,6 +38,7 @@ import kr.co.enders.ums.main.service.MainService;
 import kr.co.enders.ums.sys.acc.service.AccountService;
 import kr.co.enders.ums.sys.acc.vo.ServiceVO;
 import kr.co.enders.ums.sys.acc.vo.SysMenuVO;
+import kr.co.enders.ums.sys.acc.vo.UserProgVO;
 import kr.co.enders.ums.sys.acc.vo.UserVO;
 import kr.co.enders.ums.sys.cod.controller.UserCodeController;
 import kr.co.enders.ums.sys.log.service.SystemLogService;
@@ -68,6 +72,24 @@ public class LoginController {
 	
 	@Autowired
 	private PropertiesUtil properties;	
+	
+	
+	
+	/**
+	 * SSO 가 아닌 로그인 화면을 출력한다.
+	 * @param model
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value="/lgnCusP")
+	public String goLoginCust(Model model, HttpServletRequest request, HttpServletResponse response) {
+		
+		logger.debug("## goLoginCust not SSO  Form Start");
+		
+		return "lgn/lgnCusP";
+	}
+	
 	/**
 	 * 로그인 화면을 출력한다.
 	 * @param model
@@ -80,7 +102,9 @@ public class LoginController {
 		
 		logger.debug("## goLogin Form Start");
 		 
-		String returnUrl = getLoginUrl();
+		//신한 소스 맞춤 24.03.06
+		//String returnUrl = getLoginUrl(); 
+		String returnUrl = getLoginUrl(false);
 		return returnUrl;
 	}
 	
@@ -145,7 +169,9 @@ public class LoginController {
 		}
 		
 		//String retUrl = "lgn/lgn" ;
-		String retUrl = getLoginUrl();
+		//신한 소스 맞춤 24.03.06
+		//String retUrl = getLoginUrl();
+		String retUrl = getLoginUrl(false);
 		String clientIp = StringUtil.getClientIP(request);
 		if("000".equals(userStatus)) {
 			
@@ -299,7 +325,9 @@ public class LoginController {
 			} else {
 				model.addAttribute("result","N");
 			}
-			retUrl = getLoginUrl();
+			//신한 소스 맞춤 24.03.06
+			//retUrl = getLoginUrl();
+			retUrl = getLoginUrl(false);
 			return retUrl;
 			//return "lgn/lgnP";
 		}
@@ -515,6 +543,7 @@ public class LoginController {
 	 * @param session
 	 * @return
 	 */
+	/* 신한 소스 맞춤 24.03.06
 	@RequestMapping(value="/ssolgn")
 	public String ssoLoginProcess(@ModelAttribute LoginVO loginVO, Model model, HttpServletRequest request, HttpServletResponse response, HttpSession session) {
 		logger.debug("## ssolgn process Start-------------------->");
@@ -720,6 +749,268 @@ public class LoginController {
 			return "/err/errorUser";
 		}
 	}
+	*/
+	
+	@RequestMapping(value="/ssolgn")
+	public String ssoLoginProcess(@ModelAttribute LoginVO loginVO, Model model, HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+		logger.debug("## ssolgn process Start-------------------->");
+		
+		String authUserId = "";
+		String authMessage = "";
+		try {
+			logger.debug("## login process AuthCheck");
+			
+			/* 신한 소스 맞춤 24.03.06( 신한 외부에서는 오류가 발생 하므로 막음 )
+			WebAgent agent = new WebAgent();
+			if(agent.requestAuthentication(request, response)){ 
+				logger.error("loginService.isSSOUser Auth Failed!!!!!!!!!!!!!!!!!!!!!!!!!! " );
+			} else { 
+				authUserId = (String)session.getAttribute(Env.DEFAULT_SESSION_USERID);
+				logger.debug("loginService.isSSOUser  User ID = [" + authUserId + "]");
+			} 
+			*/
+			// 신한 소스 맞춤 24.03.06( 신한 외부에서는 오류가 발생 하므로 막음 )
+			//authUserId = (String)session.getAttribute(Env.DEFAULT_SESSION_USERID);
+			authUserId = (String)session.getAttribute("ADMIN");
+			logger.debug("loginService.isSSOUser  User ID = [" + authUserId + "]");			
+			/* 신한 소스 맞춤 24.03.06( 신한 외부에서는 오류가 발생 하므로 막음 )
+		} catch (AgentException e1) {
+			logger.error("loginService.isSSOUser AuthCheck AgentException = " + e1.getMessage());
+			authMessage = "SSO: AgentException";
+			*/
+		} catch (Exception e1) {
+			logger.error("loginService.isSSOUser AuthCheck Exception = " + e1.getMessage());
+			authMessage = "SSO: Exception";
+		} finally {
+			if(authUserId != null && !"".equals(authUserId)) {
+				loginVO.setpUserId(authUserId);
+			}
+			
+			if(loginVO.getpUserId() == null || "".equals(loginVO.getpUserId())) {
+				ActionLogVO logVO = new ActionLogVO();
+				logVO.setStatusGb("Failure");
+				logVO.setContent("SSOLogin");
+				logVO.setContentPath("/lgn/ssolgn.ums");
+				logVO.setMessage(authMessage);
+				insertLoginActionLog(request, session, logVO); 
+				return getLoginUrl(true);
+			}
+		}
+		
+		logger.debug("loginProcess pUserId = " + loginVO.getpUserId()); 
+		
+		UserVO userVO = null;
+		String userStatus = "999";
+		
+		try {
+			userVO = loginService.isSSOUser(loginVO);
+		} catch(Exception e) {
+			logger.error("loginService.isSSOUser Error = " + e);
+		}
+		
+		if(userVO != null ) {
+			if(userVO.getStatus() != null && !"".equals(userVO.getStatus())) {
+				userStatus = userVO.getStatus();
+			}
+		} else {
+			String ssoDefaultUser = properties.getProperty("DEFULT.SSO_USER");
+			if ( StringUtil.isNull(ssoDefaultUser) ) {
+				ssoDefaultUser = "ADMIN";
+			} 
+			
+			
+			//기본 사용자 정보 기준으로 사용자 정보 복사 처리 
+			LoginVO defaultUserVO = new LoginVO();
+			defaultUserVO.setpUserId(ssoDefaultUser);
+
+			try {
+				UserVO copyUserVO = new UserVO();
+				copyUserVO = loginService.isSSOUser(defaultUserVO);
+				
+				if (copyUserVO != null) { 
+					copyUserVO.setCopyUserId(authUserId); 
+					String strInitPwd =  StringUtil.makeRandomString(Code.RAND_TYPE_D);
+					strInitPwd.toUpperCase();
+					copyUserVO.setUserPwd(EncryptUtil.getEncryptedSHA256(strInitPwd));
+					copyUserVO.setUserNm(authUserId);
+					
+					if (accountService.copyUserInfoVO(copyUserVO)  < 0  ) {
+						userVO = loginService.isSSOUser(loginVO); 
+						if(copyUserVO.getCopyUserId() == null || "".equals(loginVO.getpUserId())) {
+							ActionLogVO logVO = new ActionLogVO();
+							logVO.setStatusGb("Failure");
+							logVO.setContent("SSOLogin");
+							logVO.setContentPath("/lgn/ssolgn.ums");
+							logVO.setMessage("SSO사용자 자동 생성 실패");
+							insertLoginActionLog(request, session, logVO); 
+							return getLoginUrl(true);
+						} 
+					} else {
+						//기능권한과 DB연결 권한 부여 
+						
+					}
+					
+					loginVO.setpUserId(authUserId);
+					userVO = loginService.isSSOUser(loginVO);
+					
+					if(userVO == null || "".equals(userVO.getUserId())) { 
+						ActionLogVO logVO = new ActionLogVO();
+						logVO.setStatusGb("Failure");
+						logVO.setContent("SSOLogin");
+						logVO.setContentPath("/lgn/ssolgn.ums");
+						logVO.setMessage("SSO사용자 자동 생성 실패");
+						insertLoginActionLog(request, session, logVO); 
+						return getLoginUrl(true); 
+					}
+					userStatus = "000";
+				} 
+				
+			} catch (Exception e) {
+				logger.error("loginService.copyUserInfoVO  Info error  = " + e);
+			} 
+
+		}
+		
+		if("000".equals(userStatus)) {
+			// 세션값 설정
+			 
+			session.setAttribute("NEO_SSO_LOGOUT_URL", properties.getProperty("NEO_SSO_LOGOUT_URL"));						// SSO 세션으로 넘어온 사용자 아님
+			session.setAttribute("NEO_SSO_LOGIN", "Y");						// SSO 세션으로 넘어온 사용자 아님
+			session.setAttribute("NEO_USER_ID", userVO.getUserId());		// 사용자ID
+			session.setAttribute("NEO_USER_NM", userVO.getUserNm());		// 사용자명
+			session.setAttribute("NEO_DEPT_NO", userVO.getDeptNo());		// 부서번호
+			session.setAttribute("NEO_DEPT_NM", userVO.getDeptNm());		// 부서명
+			session.setAttribute("NEO_TZ_CD", userVO.getTzCd());			// 타임존코드
+			session.setAttribute("NEO_TZ_TERM", userVO.getTzTerm());		// 타임존시간차
+			session.setAttribute("NEO_UILANG", userVO.getUilang());			// 언어권
+			session.setAttribute("NEO_CHARSET", userVO.getCharset());		// 문자셋
+			session.setAttribute("NEO_FONT", userVO.getFont());				// 폰트
+			session.setAttribute("NEO_ORG_CD", userVO.getOrgCd());			// 조직코드
+			session.setAttribute("NEO_ORG_NM", userVO.getOrgKorNm());		// 조직명
+			session.setAttribute("NEO_JOB_GB", userVO.getJobGb());			// 직책코드
+			session.setAttribute("NEO_JOB_NM", userVO.getJobNm());			// 직책명
+			session.setAttribute("NEO_LINK", userVO.getLinkService());		// 사용자 링크 서비스
+			
+			session.setAttribute("NEO_MAIL_FROM_NM", userVO.getMailFromNm()); 	// 발송자명 
+			session.setAttribute("NEO_MAIL_FROM_EM", userVO.getMailFromEm()); 	// 발송자이메일주소
+			session.setAttribute("NEO_USER_TEL", userVO.getUserTel());			// 연락처
+			session.setAttribute("NEO_USER_EM", userVO.getUserEm());			// 이메일
+			session.setAttribute("NEO_REPLY_TO_EM", userVO.getReplyToEm());		// 회신이메일
+			session.setAttribute("NEO_RETURN_EM", userVO.getReturnEm()); 		// return 이메일 
+			session.setAttribute("NEO_PER_PAGE", StringUtil.setNullToInt(userVO.getPerPage(), Integer.parseInt(properties.getProperty("LIST.ROW_PER_PAGE")))); // 사용자별 목록 조회 페이지
+			
+			session.setAttribute("NEO_USE_EMS", "N");			// EMS 사용여부
+			session.setAttribute("NEO_USE_RNS", "N");			// RNS 사용여부
+			session.setAttribute("NEO_USE_SMS", "N");			// SMS 사용여부
+			session.setAttribute("NEO_USE_PUSH", "N");			// PUSH 사용여부
+			 
+			int [][] arrUserService = checkLicense(userVO);
+			
+			int service = 0;
+			int useYn = 0;
+			for(int i=0; i < arrUserService.length ; i++) {
+				service = arrUserService[i][0] ;
+				switch(service) {
+				case 10:
+					useYn =  arrUserService[i][1] ;
+					if (useYn == 1) {
+						session.setAttribute("NEO_USE_EMS", "Y");			// EMS 사용여부
+					}
+					break;
+				case 20: 
+					useYn =  arrUserService[i][1] ;
+					if (useYn == 1) {
+						session.setAttribute("NEO_USE_RNS", "Y");			// RMS 사용여부
+					}
+					break;
+				case 30: 
+					useYn =  arrUserService[i][1] ;
+					if (useYn == 1) {
+						session.setAttribute("NEO_USE_SMS", "Y");			// SMS 사용여부
+					}
+					break;
+				case 40: 
+					useYn =  arrUserService[i][1] ;
+					if (useYn == 1) {
+						session.setAttribute("NEO_USE_PUSH", "Y");			// PUSH 사용여부
+					}
+					break;
+				default: 
+					break;
+				}
+			}
+			if(userVO.getUseSYS() != null && !"".equals(userVO.getUseSYS()) && "1".equals(userVO.getUseSYS())) {
+				session.setAttribute("NEO_USE_SYS", "Y");			// 공통설정사용권한여부
+			} else {
+				session.setAttribute("NEO_USE_SYS", "N");			// 공통설정사용권한여부
+			} 
+			  
+			// 관리자 여부
+			if(userVO.getDeptNo() == 1) {
+				session.setAttribute("NEO_ADMIN_YN", "Y");
+			} else {
+				
+				if(StringUtil.isNull(userVO.getSuperYn())){
+					session.setAttribute("NEO_ADMIN_YN", "N");
+				} else {
+					session.setAttribute("NEO_ADMIN_YN", userVO.getSuperYn());
+				}
+			}
+			
+			// 사용자 프로그램 사용권한 조회
+			List<SysMenuVO> menuList = null;
+			try {
+				menuList = loginService.getUserMenuList(userVO);
+			} catch(Exception e) {
+				logger.error("loginService.getUserMenuList Error = " + e);
+			} 
+			
+			session.setAttribute("NEO_MENU_LIST", menuList);
+			
+			ActionLogVO logVO = new ActionLogVO();
+			logVO.setStatusGb("Success");
+			logVO.setContent("SSOLogin");
+			logVO.setContentPath("/lgn/ssolgn.ums");
+			insertLoginActionLog(request, session, logVO);
+			
+			model.addAttribute("result","Y"); 
+			
+			String retUrl = getLoginUrl(true);
+			
+			if(loginVO.getpDirectMenu() != null && !"".equals(loginVO.getpDirectMenu())) {
+				String directMenu = loginVO.getpDirectMenu();
+				if ( "10".equals(directMenu)) {
+					retUrl= "redirect:/ems/apr/mailAprListP.ums?pMenuId=" + "M1003000" + "&menuId=" + "M1003004" + "&searchAprUserId=" + userVO.getUserId() + "&topNotiYn=Y" ;
+				} else if( "20".equals(directMenu)) {
+					retUrl= "redirect:/ems/apr/mailAprListP.ums?pMenuId=" + "M1003000" + "&menuId=" + "M1003004" ;
+				} else if( "30".equals(directMenu)) {
+					retUrl= "redirect:/ems/cam/taskListP.ums?pMenuId=" + "M1002000" + "&menuId=" + "M1002001" ;
+				} else if( "40".equals(directMenu)) {
+					retUrl= "redirect:/rns/svc/serviceListP.ums?pMenuId=" + "M2001000" + "&menuId=" + "M2001002" ;
+				} else {
+					retUrl =  "redirect:/ems/index.ums";
+				}
+			} else {
+				retUrl = "redirect:/ems/index.ums";
+			}
+			
+			return retUrl;
+		} else {
+			ActionLogVO logVO = new ActionLogVO();
+			logVO.setStatusGb("Failure");
+			logVO.setContent("SSOLogin");
+			logVO.setContentPath("/lgn/ssolgn.ums");
+			session.setAttribute("NEO_USER_ID", loginVO.getpUserId());
+			insertLoginActionLog(request, session, logVO);
+
+			if(userVO != null ) {
+				model.addAttribute("result","E");
+			} else {
+				model.addAttribute("result","N");
+			}
+			return "/err/errorUser";
+		}
+	} 
 	
 	/**
 	 * 로그아웃 처리
@@ -742,7 +1033,35 @@ public class LoginController {
 		session.invalidate();
 		return "lgn/logout";
 	}
+
+	/**
+	 * SSO 로그아웃 처리
+	 * @param model
+	 * @param request
+	 * @param response
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping(value="/logoutSso")
+	public void goLogoutSso(Model model, HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+		 
+		ActionLogVO logVO = new ActionLogVO();
+		logVO.setStatusGb("Success");
+		logVO.setContent("SsoLogOut");
+		logVO.setContentPath("/lgn/logoutSso.ums");
+		insertLoginActionLog(request, session, logVO); 
 	
+		try {
+			// 신한 소스 맞춤 24.03.06 (신한 외부에서는 오류가 발생 하므로 막음)
+			//new WebAgent().redirectLogout(request, response);
+			 
+			logger.debug("goLogoutSso Success!!! ");
+			
+		} catch (Exception e) {
+			logger.error("logoutSso  error = " + e.getMessage());
+		} 
+	 
+	}
 	/**
 	 * 세션 타임아웃 처리
 	 * @param model
@@ -1030,6 +1349,14 @@ public class LoginController {
 		return "lgn/sso/default";
 	}
 	
+	public String getLoginUrl(boolean ssoLogin) {
+		  
+		String returnUrl = "lgn/lgnP"; 
+		
+		returnUrl = "lgn/lgnP";   
+		return returnUrl;
+	}
+	/* 신한 소스 맞춤 24.03.06
 	public String getLoginUrl() {
 		String captcha =StringUtil.setNullToString(properties.getProperty("CAPTCHA")) ;
 		String returnUrl = "lgn/lgnP"; 
@@ -1038,4 +1365,5 @@ public class LoginController {
 		}
 		return returnUrl;
 	}
+	*/
 }
