@@ -49,6 +49,7 @@
 							<input type="hidden" id="campNo" name="campNo" value="<c:out value='${searchVO.campNo}'/>" />
 							<input type="hidden" id="status" name="status">
 							<input type="hidden" id="approvalProcAppYn" name="approvalProcAppYn" value="">
+							<input type="hidden" id="copyTid" name="copyTid" value="0">
 							<fieldset>
 								<legend>조회 및 목록</legend>
 
@@ -196,4 +197,9 @@
 		</div>
 	</div> 
 </body>
+
+<!-- 복사시 TID 입력 팝업// -->
+<%@ include file="/WEB-INF/jsp/inc/pop/pop_tid_copy.jsp"%>
+<!-- // 복사시 TID 입력 팝업 -->
+
 </html>

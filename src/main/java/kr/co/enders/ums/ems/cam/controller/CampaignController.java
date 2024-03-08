@@ -1053,6 +1053,7 @@ public class CampaignController {
 	@RequestMapping(value="/campTempAdd")
 	public String insertCampTemp(@ModelAttribute CampaignTemplateVO campaignTemplateVO, Model model, HttpServletRequest request, HttpServletResponse response, HttpSession session) {
 		
+		logger.debug("insertCampTemp tid              = " + campaignTemplateVO.getTid()); 
 		logger.debug("insertCampTemp campNo           = " + campaignTemplateVO.getCampNo());
 		logger.debug("insertCampTemp segNoc           = " + campaignTemplateVO.getSegNoc());
 		logger.debug("insertCampTemp deptNo           = " + campaignTemplateVO.getDeptNo());
@@ -1332,10 +1333,45 @@ public class CampaignController {
 		return "ems/cam/campTempAddApi";
 	}
 	
+	/**
+	 * 캠페인템플릿  템플릿 코드 체크 
+	 * 
+	 * @param userVO
+	 * @param model
+	 * @param request
+	 * @param response
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping(value = "/campaignTemplateId")
+	public ModelAndView getCampaignTemplateId(@ModelAttribute CampaignTemplateVO searchVO, Model model, HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+		logger.debug("getCampaignTemplateId tid       = " + searchVO.getTid()); 
 
+		boolean result = false;
+		CampaignTemplateVO campaignTemplateVO = new CampaignTemplateVO();
+		try {
+			campaignTemplateVO = campaignService.getCampaignTemplateId(searchVO.getTid());
+			if (campaignTemplateVO != null ) {
+				result = false;
+			} else {
+				result = true;
+			}
+		} catch (Exception e) {
+			logger.error("campaignService.getCampaignTemplateId error = " + e);
+		}
+		 
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		if (result) {
+			map.put("result", "Success");
+		} else {
+			map.put("result", "Fail");
+		}
+		ModelAndView modelAndView = new ModelAndView("jsonView", map);
+		return modelAndView;
+	}
 	
 	/**
-	 * 템플릿 코드를 체크한다. 템플릿 중복을 방지.
+	 * 캠페인템플릿 EAI 템플릿 코드 체크 
 	 * 
 	 * @param userVO
 	 * @param model
@@ -2169,6 +2205,7 @@ public class CampaignController {
 	@RequestMapping(value="/campTempCopy")
 	public ModelAndView copyCampTempInfo(@ModelAttribute CampaignTemplateVO campaignTemplateVO, Model model, HttpServletRequest request, HttpServletResponse response, HttpSession session) {
 		logger.debug("copyCampTempInfo tids   = " + campaignTemplateVO.getTids());
+		logger.debug("copyCampTempInfo copyTid   = " + campaignTemplateVO.getCopyTid());
 		
 		campaignTemplateVO.setTid(Integer.parseInt(campaignTemplateVO.getTids()));
 		campaignTemplateVO.setDeptNo((int)session.getAttribute("NEO_DEPT_NO"));

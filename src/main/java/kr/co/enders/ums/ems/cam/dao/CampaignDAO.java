@@ -97,6 +97,11 @@ public class CampaignDAO implements CampaignMapper {
 	}
 	
 	@Override
+	public CampaignTemplateVO getCampaignTemplateId(int tid) throws Exception {
+		return sqlSessionEms.getMapper(CampaignMapper.class).getCampaignTemplateId(tid);
+	}
+	
+	@Override
 	public CampaignTemplateVO getCampaignTemplateEaiCampNo(String eaiCampNo) throws Exception {
 		return sqlSessionEms.getMapper(CampaignMapper.class).getCampaignTemplateEaiCampNo(eaiCampNo);
 	}

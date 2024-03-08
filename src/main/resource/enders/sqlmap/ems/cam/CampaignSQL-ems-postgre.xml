@@ -390,7 +390,7 @@
 	<select id="getCurrCampaignTemplateTid" resultType="_int">
 		SELECT CURRVAL('TS_SERVICE_TID_SEQ')
 	</select>
-
+	
 	<select id="getCampaignTemplateWebAgentInfo" parameterType="_int" resultType="campaignTemplateWebAgentVO">
 		SELECT ATT_NO
 			 , SOURCE_URL
@@ -404,6 +404,17 @@
 		 WHERE TID = #{tid}
 	</select>
 	
+	<select id="getCampaignTemplateId" parameterType="_int" resultType="campaignTemplateVO">
+		SELECT T1.TID
+			 , T1.TNM
+			 , T1.USE_YN
+			 , T1.STATUS
+			 , T1.EAI_CAMP_NO 
+		FROM TS_SERVICETYP T1
+		WHERE TID = #{tid}
+	</select>
+	
+		
 	<select id="getCampaignTemplateEaiCampNo" parameterType="string" resultType="campaignTemplateVO">
 		SELECT T1.TID
 			 , T1.TNM
@@ -476,7 +487,8 @@
 		)
 		VALUES
 		(
-			  NEXTVAL('TS_SERVICE_TID_SEQ')
+			  <!-- NEXTVAL('TS_SERVICE_TID_SEQ')  -->
+			  #{tid}
 			, #{tnm}
 			, #{sname}
 			, #{smail}

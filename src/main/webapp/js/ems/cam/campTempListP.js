@@ -82,6 +82,7 @@ function goServiceAdd() {
 
 // 복사 클릭시
 function goCopy() {
+	
 	var checkedCount = 0;
 
 	$("#searchForm input[name='tids']").each(function(idx,item){
@@ -91,18 +92,16 @@ function goCopy() {
 		alert("복사할 목록을 하나만 선택해 주세요.!!");
 		return;
 	}
-
-	var param = $("#searchForm").serialize();
-	$.getJSON("./campTempCopy.json?" + param, function(data) {
-		if(data.result == "Success") {
-			alert("복사되었습니다.");
-			
-			// 메일 목록 재조회;
-			goSearch('1');
-		} else if(data.result == "Fail") {
-			alert("복사 처리중 오류가 발생하였습니다.");
-		}
-	});
+	
+	//복사 팝업 초기화 
+	$("#popChkTid").val("N");
+	$("#popChkTid").text("중복확인 검사");
+	$("#popChkTid").attr("disabled", false);
+	$("#copyTid").val("0");
+	$("#popCopyTid").attr("disabled",false);
+	$("#btnPopCopy").attr("disabled",true);  
+	fn.popupOpen('#popup_tid_copy'); 
+	
 }
 
 // 사용중지 클릭시
@@ -169,6 +168,61 @@ function goUpdatePart(tid, approvalProcAppYn) {
 	$("#searchForm").attr("target","").attr("action","./campTempUpdateP.ums").submit();
 }
 
+//TID중복 체크 
+function checkTid(){
+	
+	var reg_id =/^[0-9]{1,8}$/; 
+	var copyTid= $("#popCopyTid").val().trim(); 
+	copyTid.replace(" " , "");
+	
+	if(copyTid == "") {
+		alert("검색할 API 템플릿 번호를 입력해주세요");
+		return;
+	}
+	
+	if(!reg_id.test(copyTid)) {
+		alert("API 템플릿번호는 숫자로 1~5자로 입력하셔야합니다");
+		$("#popCopyTid").focus();
+		$("#popCopyTid").select();
+		return; 
+	} else{
+		var  nTid = Number(copyTid) ;
+		if (nTid >= 99999 || nTid < 1 ) {
+			alert("API 템플릿 번호는 0 이상 99999 이하의 숫자만 가능합니다");
+			$("#popCopyTid").focus();
+			$("#popCopyTid").select();	
+			return;
+		}
+	}
+	
+	$.getJSON("/ems/cam/campaignTemplateId.json?tid=" + copyTid , function(data) {
+		if(data.result == "Success") { 
+			$("#popChkTid").val("Y");
+			$("#popChkTid").text("중복확인 완료");
+			$("#popChkTid").attr("disabled",true);
+			$("#copyTid").val(copyTid);
+			$("#popCopyTid").attr("disabled",true);
+			$("#btnPopCopy").attr("disabled",false); 
+		} else if(data.result == "Fail") {
+			alert("이미 사용중인 API 템플릿번호입니다.");
+		}
+	}); 
+} 
+
+function goPopCopy(){
+	var param = $("#searchForm").serialize();
+	$.getJSON("./campTempCopy.json?" + param, function(data) {
+		if(data.result == "Success") {
+			fn.popupClose('#popup_tid_copy');
+			alert("복사되었습니다.");
+			
+			// 메일 목록 재조회;
+			goSearch('1');
+		} else if(data.result == "Fail") {
+			alert("복사 처리중 오류가 발생하였습니다.");
+		}
+	}); 
+}
 // 페이징
 function goPageNum(page) {
 	goSearch(page);

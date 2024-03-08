@@ -110,7 +110,8 @@ public class CampaignTemplateVO extends CommonVO {
 	private String contId;			// 컨텐츠아이디
 	private String emailTmplId;		// 템플릿아이디
 	private String mappingValues;	// 사용된치환변수
-	
+	//복사시 API 템플릿 번호 수기 입력 
+	private int copyTid;			// 복사 생성되는 Tid 번호(타입 : 숫자)
 	
 	public int getTid() {
 		return tid;
@@ -664,5 +665,10 @@ public class CampaignTemplateVO extends CommonVO {
 	public void setMappingValues(String mappingValues) {
 		this.mappingValues = mappingValues;
 	}
-	
+	public int getCopyTid() {
+		return copyTid;
+	}
+	public void setCopyTid(int copyTid) {
+		this.copyTid = copyTid;
+	} 
 }

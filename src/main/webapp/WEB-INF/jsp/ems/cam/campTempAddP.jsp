@@ -85,7 +85,7 @@
 							<input type="hidden" id="campId"            name="campId"      value="<c:out value='${campId}'/>">
 							<input type="hidden" id="cellNodeId"        name="cellNodeId"  value="<c:out value='${cellNodeId}'/>">
 							<input type="hidden" id="contId"            name="contId"      value="<c:out value='${contId}'/>"> 
-							
+							 
 							<fieldset>
 								<legend>조건 및 메일 내용</legend>
 
@@ -207,6 +207,15 @@
 														<p class="label bg-gray" style="width: calc(100% - 14.2rem);" id="txtSegNm">선택된 수신자그룹이 없습니다.</p>
 														<button type="button" class="btn btn-search" onclick="popSegSelect();">검색</button> 
 														<button type="button" class="btn fullblue" onclick="goSegInfoMail('');">미리보기</button>
+													</div>
+												</div>
+											</li>
+											<li class="col-full"> 
+												<label class="required">API 템플릿 번호</label>
+												<div class="list-item">
+													<div class="filebox">
+														<input type="text" id="tid" name="tid" style="width:calc(100% - 10.4rem);" placeholder="API 템플릿ID를 입력해주세요.(숫자)" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" />
+														<button type="button" class="btn fullblue" id="chkTid"  onclick="checkTid();">중복확인 검사</button>
 													</div>
 												</div>
 											</li>

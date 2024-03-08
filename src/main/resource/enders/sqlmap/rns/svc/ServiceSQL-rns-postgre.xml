@@ -141,7 +141,8 @@
 		)
 		VALUES
 		(
-			  NEXTVAL('TS_SERVICE_TID_SEQ') 
+			  <!-- NEXTVAL('TS_SERVICE_TID_SEQ')  -->
+			  #{tid}
 			, #{tnm}
 			, #{sname}
 			, #{smail}

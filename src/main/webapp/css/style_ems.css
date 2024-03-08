@@ -218,6 +218,7 @@
 .popregisteragent .cont .clear label {float:right;margin-top:.5rem;}
 .popregisteragent .cont .clear label span {margin-right:0;color:#888;font-size:1.3rem;}
 .popregisteragent .cont input[type="text"] {margin-top:2rem;}
+.popregisteragent .cont button {margin-top:2rem;}
 .popregisteragent .cont .list-star {display:inline-block;}
 
 /* popup : 수신자그룹 미리보기 */

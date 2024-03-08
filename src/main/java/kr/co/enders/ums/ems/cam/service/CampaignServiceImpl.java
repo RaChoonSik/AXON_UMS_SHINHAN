@@ -105,6 +105,11 @@ public class CampaignServiceImpl implements CampaignService {
 	}
 	
 	@Override
+	public CampaignTemplateVO getCampaignTemplateId(int tid) throws Exception {
+		return campaignDAO.getCampaignTemplateId(tid);
+	}
+	
+	@Override
 	public CampaignTemplateVO getCampaignTemplateEaiCampNo(String eaiCampNo) throws Exception {
 		return campaignDAO.getCampaignTemplateEaiCampNo(eaiCampNo);
 	}
@@ -122,12 +127,12 @@ public class CampaignServiceImpl implements CampaignService {
 		result += campaignDAO.insertCampaignTemplateInfo(campaignTemplateVO);
 		
 		// 서비스ID 조회
-		//MySql, Oracle
-		int tid = campaignDAO.getCurrCampaignTemplateTid();
-		
+		//MySql, Oracle -- 신한은 tid를 직접 입력하므로 막음 
+		//int tid = campaignDAO.getCurrCampaignTemplateTid();
+		int tid = campaignTemplateVO.getTid();
 		//MsSql
 		//int tid = rnsAutoSendVO.getTid();
-		
+	
 		// 첨부파일 등록
 		if(attachList != null && attachList.size() > 0) {
 			for(CampaignTemplateAttachVO attach:attachList) {
@@ -296,6 +301,7 @@ public class CampaignServiceImpl implements CampaignService {
 		
 		// 서비스 정보 조회
 		CampaignTemplateVO campTempCopy = campaignDAO.getCampaignTemplateInfo(campaignTemplateVO.getTid());
+		campTempCopy.setCopyTid(campaignTemplateVO.getCopyTid());
 		
 		// Content 파일 복사
 		if("1".equals(campTempCopy.getContentsTyp().trim())) {
@@ -324,6 +330,7 @@ public class CampaignServiceImpl implements CampaignService {
 		}
 
 		// 복사한 서비스 값 설정
+		campTempCopy.setTid(campaignTemplateVO.getCopyTid());
 		campTempCopy.setDeptNo(campaignTemplateVO.getDeptNo());
 		campTempCopy.setUserId(campaignTemplateVO.getUserId());
 		campTempCopy.setRegId(campaignTemplateVO.getRegId());
@@ -337,7 +344,8 @@ public class CampaignServiceImpl implements CampaignService {
 		result += campaignDAO.insertCampaignTemplateInfo(campTempCopy);
 		
 		// 신규 등록 서비스ID 조회
-		int tid = campaignDAO.getCurrCampaignTemplateTid();
+		//int tid = campaignDAO.getCurrCampaignTemplateTid();
+		int tid= campaignTemplateVO.getCopyTid();
 		
 		// 첨부파일 목록 읽기
 		List<CampaignTemplateAttachVO> attachList = campaignDAO.getCampaignTemplateAttachList(campaignTemplateVO.getTid());

@@ -120,8 +120,16 @@ public interface CampaignMapper {
 	public CampaignTemplateWebAgentVO getCampaignTemplateWebAgentInfo(int tid) throws Exception;
 	
 	/**
+	 * 캠페인템플릿 템플릿 코드 체크 
+	 * @param tid
+	 * @return
+	 * @throws Exception
+	 */
+	public CampaignTemplateVO getCampaignTemplateId(int tid) throws Exception;
+	
+	/**
 	 * 캠페인템플릿 EAI 템플릿 코드 체크 
-	 * @param rnsServiceVO
+	 * @param 
 	 * @return
 	 * @throws Exception
 	 */

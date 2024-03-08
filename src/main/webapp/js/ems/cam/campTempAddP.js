@@ -344,7 +344,7 @@ function checkEaiCampNo() {
 		alert("템플릿코드는 공백 없이 입력해주세요");
 		$("#eaiCampNo").focus();
 		$("#eaiCampNo").select();
-		return; 
+		return; 	
 	}else if( (num < 0 || eng < 0) ){
 		alert("영문,숫자를 혼합하여 입력해주세요");
 		$("#eaiCampNo").focus();
@@ -373,6 +373,12 @@ function goAdd () {
 		popCampSelect();
 		return;
 	}
+	
+	if($("#checkTid").val() == "N") {
+		alert("템플릿ID 중복검사를 해야합니다 템플릿ID옆의 중복검사 버튼을 클릭하여 ID중복검사를 해주세요\n");	
+		errflag = true;
+	}
+	
 	/*
 	if($("#segNoc").val() == "") {
 		alert("수신자그룹을 선택하세요.");
@@ -460,6 +466,7 @@ function goAdd () {
 	}
 	*/
 	
+	$("#tid").removeAttr("disabled");
 	// 스마트에디터 편집기 내용 serviceContent로 복사
 	oEditors.getById["ir1"].exec("UPDATE_CONTENTS_FIELD", []);
 	$("#serviceContent").val( $("#ir1").val() );	
@@ -762,6 +769,46 @@ function goPopSegList() {
 		}
 	});
 }
+
+//TID중복 체크 
+function checkTid(){
+	
+	var reg_id =/^[0-9]{1,8}$/; 
+	var tid= $("#tid").val().trim(); 
+	tid.replace(" " , "");
+	
+	if(tid == "") {
+		alert("검색할 API 템플릿 번호를 입력해주세요");
+		return;
+	}
+	
+	if(!reg_id.test(tid)) {
+		alert("API 템플릿 번호는 숫자로 1~5자로 입력하셔야합니다");
+		$("#tid").focus();
+		$("#tid").select();
+		return; 
+	} else{
+		var  nTid = Number(tid) ;
+		if (nTid >= 99999 || nTid < 1 ) {
+			alert("API 템플릿 번호는 0 이상 99999 이하의 숫자만 가능합니다");
+			$("#tid").focus();
+			$("#tid").select();	
+			return;
+		}
+	}
+	
+	$.getJSON("/ems/cam/campaignTemplateId.json?tid=" + tid , function(data) {
+		if(data.result == "Success") {
+			alert("사용가능한 API 템플릿 번호입니다.");	 
+			$("#chkTid").val("Y");
+			$("#chkTid").text("중복확인 완료");
+			$("#tid").attr("disabled",true);
+			$("#chkTid").attr("disabled",true);
+		} else if(data.result == "Fail") {
+			alert("이미 사용중인 API 템플릿 번호입니다.");
+		}
+	}); 
+} 
 
 //금칙어 체크 
 function checkProhibit(){
