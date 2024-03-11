@@ -190,6 +190,7 @@ function goSegFileAdd() {
 		var a = confirm("쿼리테스트를 하지 않았습니다.\n계속 실행을 하겠습니까?");
 		if ( a ) {
 			var param = $("#segInfoForm").serialize();
+			console.log(param);
 			$.getJSON("./segAdd.json?" + param, function(data) {
 				if(data.result == "Success") {
 					alert("등록되었습니다.");

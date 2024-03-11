@@ -547,6 +547,7 @@ public class SegmentController {
 		model.addAttribute("totCount", totCount);
 		model.addAttribute("memList", memList);
 		model.addAttribute("memAlias", memAlias);
+		model.addAttribute("mergeCol", mergeKey);
 		model.addAttribute("mergeKey", mergeKey);
 		model.addAttribute("pageUtil", pageUtil);
 		
@@ -612,6 +613,8 @@ public class SegmentController {
 				segmentVO.setRealQuery(StringUtil.removeSpecialChar(segmentVO.getRealQuery(), ";"));
 			}
 		}
+		
+		segmentVO.setMergeKey(segmentVO.getMergeCol());
 		
 		segmentVO.setRegId((String)session.getAttribute("NEO_USER_ID"));
 		segmentVO.setRegDt(StringUtil.getDate(Code.TM_YMDHMS));
@@ -679,6 +682,8 @@ public class SegmentController {
 		int result = 0;
 		
 		if(StringUtil.isNull(segmentVO.getUserId())) segmentVO.setUserId((String)session.getAttribute("NEO_USER_ID"));
+		
+		segmentVO.setMergeKey(segmentVO.getMergeCol());
 		
 		if(segmentVO.getDeptNo() == 0) {
 			if(!"Y".equals((String)session.getAttribute("NEO_ADMIN_YN"))) {

@@ -16,7 +16,7 @@ $(document).ready(function(){
 		$("#txtTotCnt").html(totCount + "명");
 		
 		var mergeKey = "<c:out value='${mergeKey}'/>";
-		$("#mergeKey").val(mergeKey);
+		//$("#mergeKey").val(mergeKey); //본화면과 ID가 겹치기도 하고 Key와 Col 분리 의미가 없으므로 제외함 
 		$("#mergeCol").val(mergeKey);
 	} else {
 		var totCount = "<c:out value='${totCount}'/>";
@@ -24,7 +24,7 @@ $(document).ready(function(){
 		$("#txtTotCnt",parent.document).html(totCount + "명");
 		
 		var mergeKey = "<c:out value='${mergeKey}'/>";
-		$("#mergeKey",parent.document).val(mergeKey);
+		//$("#mergeKey",parent.document).val(mergeKey); //본화면과 ID가 겹치기도 하고 Key와 Col 분리 의미가 없으므로 제외함 
 		$("#mergeCol",parent.document).val(mergeKey);
 	}
 });

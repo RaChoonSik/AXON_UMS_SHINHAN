@@ -24,6 +24,7 @@
         <input type="hidden" id="mergeCol" name="mergeCol">
         <input type="hidden" name="createTy" value="003">
         <input type="hidden" name="serviceGb" value="10">
+        <input type="hidden" name="fncUpdate" value="Y">
 		<fieldset>
 			<legend>수신자그룹 선택</legend>
 			<h3 class="pop-title">수신자그룹 신규등록</h3>

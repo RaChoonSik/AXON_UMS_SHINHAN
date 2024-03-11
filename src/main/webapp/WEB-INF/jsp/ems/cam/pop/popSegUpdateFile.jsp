@@ -21,11 +21,12 @@
 		<input type="hidden" name="deptNo" value="<c:out value='${segInfo.deptNo}'/>">
 		<input type="hidden" name="userId" value="<c:out value='${segInfo.userId}'/>">
 		<input type="hidden" name="segFlPath" value="<c:out value='${segInfo.segFlPath}'/>">
-		<input type="hidden" id="mergeKey" name="mergeKey" value="<c:out value='${segInfo.mergeKey}'/>">
+		<%-- <input type="hidden" id="mergeKey" name="mergeKey" value="<c:out value='${segInfo.mergeKey}'/>"> --%>
 		<input type="hidden" id="mergeCol" name="mergeCol" value="<c:out value='${segInfo.mergeCol}'/>">
 		<input type="hidden" name="createTy" value="<c:out value='${segInfo.createTy}'/>">
         <input type="hidden" name="serviceGb" value="<c:out value='${segInfo.serviceGb}'/>">
 		<input type="hidden" name="downType" value="002">
+		<input type="hidden" name="fncUpdate" value="Y">
 		<fieldset>
 			<legend>수신자그룹 선택</legend>
 			<h3 class="pop-title">수신자그룹 정보수정(파일등록)</h3>

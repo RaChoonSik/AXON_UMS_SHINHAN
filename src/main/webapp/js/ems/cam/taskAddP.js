@@ -1301,6 +1301,9 @@ function addressUpload() {
 				
 				fn.fileReset('#popup_file_seg');
 				fn.popupClose('#popup_file_seg');
+				
+				$("#popSegInfoFormMail input[name='separatorChar']").val(""); 
+				$("#popSegInfoFormMail input[name='fncUpdate']").val("N"); 
 			},
 			error: function () {
 				alert("File Upload Error!!");
@@ -1343,6 +1346,8 @@ function fncSep(userId) {
 		dataType : "html",
 		success : function(pageHtml){
 			$("#iFrmMail").contents().find("body").html(pageHtml);
+			$("#popSegInfoFormMail input[name='fncUpdate']").val("Y"); 
+			alert("구분자가 등록되었습니다");
 		},
 		error : function(){
 			alert("Error!!");
@@ -1362,6 +1367,12 @@ function goPopSegInfoAddFile() {
 		$("#popSegInfoFormMail input[name='separatorChar']").focus();
 		return;
 	}
+	
+	if($("#popSegInfoFormMail input[name='fncUpdate']").val() != "Y") {
+		alert("구분자 등록은 필수 입니다."); 
+		return;
+	}
+	
 	if($("#popSegInfoFormMail input[name='segNm']").val() == "") {
 		alert("수신자그룹명은 필수입력 항목입니다.");
 		$("#popSegInfoFormMail input[name='segNm']").focus();
@@ -1384,6 +1395,7 @@ function goPopSegInfoAddFile() {
 	
 	// 등록 처리
 	var param = $("#popSegInfoFormMail").serialize();
+	console.log(param);
 	$.getJSON("../seg/segAdd.json?" + param, function(data) {
 		if(data.result == "Success") {
 			alert("등록되었습니다.");
@@ -1531,6 +1543,11 @@ function goPopSegInfoUpdateFile() {
 		$("#popSegInfoFormMail input[name='separatorChar']").focus();
 		return;
 	}
+	if($("#popSegInfoFormMail input[name='fncUpdate']").val() != "Y") {
+		alert("구분자 등록은 필수입니다."); 
+		return;
+	} 
+	
 	if($("#popSegInfoFormMail select[name='status']").val() == "") {
 		alert("상태는 필수입력 항목입니다.");
 		$("#popSegInfoFormMail select[name='status']").focus();
