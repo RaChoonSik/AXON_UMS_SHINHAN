@@ -215,7 +215,7 @@
 												<div class="list-item">
 													<div class="filebox">
 														<input type="text" id="tid" name="tid" style="width:calc(100% - 10.4rem);" placeholder="API 템플릿ID를 입력해주세요.(숫자)" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" />
-														<button type="button" class="btn fullblue" id="chkTid"  onclick="checkTid();">중복확인 검사</button>
+														<button type="button" class="btn fullblue" id="chkTid"  onclick="checkTid();" val="N">중복확인 검사</button>
 													</div>
 												</div>
 											</li>

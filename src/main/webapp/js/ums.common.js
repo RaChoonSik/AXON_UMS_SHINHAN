@@ -403,7 +403,7 @@ function goPageNumSeg(pageNum) {
 			$("#previewMemberList").html(pageHtml);
 		},
 		error : function(){
-			alsert("목록 조회에 실패하였습니다");
+			alert("목록 조회에 실패하였습니다");
 		}
 	});
 }
@@ -459,7 +459,7 @@ function getTestUserList() {
 			$("#divTestUserList").html(pageHtml);
 		},
 		error : function(){
-			alsert("목록 조회에 실패하였습니다");
+			alert("목록 조회에 실패하였습니다");
 		}
 	});
 }
@@ -605,7 +605,7 @@ function getTestCustList() {
 			$("#divTestCustList").html(pageHtml);
 		},
 		error : function(){
-			alsert("목록 조회에 실패하였습니다");
+			alert("목록 조회에 실패하였습니다");
 		}
 	});
 }
@@ -663,7 +663,7 @@ function getTestEaiUserList( ) {
 			$("#divTestEaiUserList").html(pageHtml);
 		},
 		error : function(){
-			alsert("목록 조회에 실패하였습니다");
+			alert("목록 조회에 실패하였습니다");
 		}
 	});
 }

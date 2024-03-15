@@ -38,7 +38,7 @@ function goSearch() {
 			}
 		},
 		error : function(){
-			alsert("목록 조회에 실패하였습니다");
+			alert("목록 조회에 실패하였습니다");
 		}
 	}); 
 } 

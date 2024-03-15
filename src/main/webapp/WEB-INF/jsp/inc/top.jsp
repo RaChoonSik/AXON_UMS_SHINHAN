@@ -51,6 +51,20 @@
 		document.location.href = "<c:url value='/lgn/logout.ums'/>";
 	}
 
+	//신한은행 소스 2024.03.15 (누락되엇었음)
+	/*function goLogout(ssoYn) {  
+		if(ssoYn == "Y") { 
+			/* document.location.href = "<c:url value='/lgn/logoutSso.ums?RelayState=http://10.170.30.44:9090/SP/lgn/ssolgn.ums'/>"; */
+			//document.location.href = "<c:url value='/lgn/logoutSso.ums?RelayState=http://emsdev.shinhanez.co.kr:8001/lgn/ssolgn.ums'/>"; 
+			//document.location.href = "<c:url value='/lgn/logoutSso.ums?RelayState=${NEO_SSO_LOGOUT_URL}/lgn/ssolgn.ums'/>";
+			document.location.href = "<c:url value='/lgn/logoutSso.ums?RelayState=${NEO_SSO_LOGOUT_URL}/lgn/ssolgn.ums'/>";
+		} else {
+			document.location.href = "<c:url value='/lgn/logout.ums'/>"; 
+		} 
+
+	}
+	*/
+	
 	function goUserInfo(userId) {
 		popUserInfo(userId);
 	}

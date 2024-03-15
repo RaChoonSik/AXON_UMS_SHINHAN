@@ -77,7 +77,7 @@ public class CommonSessionInterceptor extends HandlerInterceptorAdapter {
 			} else {
 				if ( session.getAttribute("NEO_SSO_LOGIN") != null) {
 				  if("Y".equals((String)session.getAttribute("NEO_SSO_LOGIN"))){
-					    //신한 소스 맞춤 24.03.06
+					    //신한 소스 맞춤 24.03.06 (WebAgent는 신한EZ SSO 임)
 					    //new WebAgent().redirectLogout(request, response); 
 					  	response.sendRedirect(contextRoot + "/lgn/timeout.ums"); 
 				  } else { 

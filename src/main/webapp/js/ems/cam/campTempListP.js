@@ -43,7 +43,7 @@ function goSearch(pageNo) {
 			$("#divCampTempList").html(pageHtml);
 		},
 		error : function(){
-			alsert("목록 조회에 실패하였습니다");
+			alert("목록 조회에 실패하였습니다");
 		}
 	});
 }
@@ -215,13 +215,28 @@ function goPopCopy(){
 		if(data.result == "Success") {
 			fn.popupClose('#popup_tid_copy');
 			alert("복사되었습니다.");
-			
+			$("#popChkTid").val("N");
+			$("#popChkTid").text("중복확인");
+			$("#popChkTid").attr("disabled",false); 
+			$("#popCopyTid").attr("disabled",false);
+			$("#btnPopCopy").attr("disabled",true);  
 			// 메일 목록 재조회;
 			goSearch('1');
 		} else if(data.result == "Fail") {
 			alert("복사 처리중 오류가 발생하였습니다.");
 		}
 	}); 
+}
+
+function goPopCopyCancel(){
+	
+	alert("API 템플릿 복사가 취소되었습니다.");
+	$("#popChkTid").val("N");
+	$("#popChkTid").text("중복확인");
+	$("#popChkTid").attr("disabled",false); 
+	$("#popCopyTid").attr("disabled",false);
+	$("#btnPopCopy").attr("disabled",true);  	
+	fn.popupClose('#popup_tid_copy');
 }
 // 페이징
 function goPageNum(page) {

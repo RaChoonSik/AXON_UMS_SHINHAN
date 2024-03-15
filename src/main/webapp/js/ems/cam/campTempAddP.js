@@ -344,7 +344,7 @@ function checkEaiCampNo() {
 		alert("템플릿코드는 공백 없이 입력해주세요");
 		$("#eaiCampNo").focus();
 		$("#eaiCampNo").select();
-		return; 	
+		return; 
 	}else if( (num < 0 || eng < 0) ){
 		alert("영문,숫자를 혼합하여 입력해주세요");
 		$("#eaiCampNo").focus();
@@ -374,7 +374,7 @@ function goAdd () {
 		return;
 	}
 	
-	if($("#checkTid").val() == "N") {
+	if($("#chkTid").val() == "N") {
 		alert("템플릿ID 중복검사를 해야합니다 템플릿ID옆의 중복검사 버튼을 클릭하여 ID중복검사를 해주세요\n");	
 		errflag = true;
 	}

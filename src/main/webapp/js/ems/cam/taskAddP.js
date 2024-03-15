@@ -889,12 +889,12 @@ function setPopCampTempInfo(tid, tnm, contentsPath, recvChkYn) {
 			
 			$("#txtCampNm").html(campTempInfo.campNm);
 			$("#campNo").val(campTempInfo.campNo);
-			$("#campTy").val(data.campInfo.campTy);
+			//$("#campTy").val(data.campInfo.campTy);
 			$("#txtSegNm").html(campTempInfo.segNm);
-			var segNoc = segInfo.segNo + "|" + segInfo.mergeKey
-			$("#segNoc").val(segNoc);
+			//var segNoc = segInfo.segNo + "|" + segInfo.mergeKey
+			//$("#segNoc").val(segNoc);
 			//수신자그룹
-			setPopSegInfo(segNoc,segInfo.segNm);
+			//setPopSegInfo(segNoc,segInfo.segNm);
 			
 			$("#deptNo").val(campTempInfo.deptNo);
 			var option = new Option(campTempInfo.userNm, campTempInfo.userId);
