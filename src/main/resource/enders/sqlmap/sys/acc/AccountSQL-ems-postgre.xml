@@ -793,6 +793,61 @@
 		  , #{ipaddrchkYn} 
 		)
 	</insert> 
+	
+ 	<!-- 사용자 정보 복사 -->
+	<insert id="copyUserInfo" parameterType="userVO">
+		INSERT INTO NEO_USER 
+		(
+			USER_ID
+		  , DEPT_NO
+		  , USER_NM
+		  , USER_PWD
+		  , USER_EM
+		  , USER_TEL
+		  , USER_DESC
+		  , STATUS
+		  , MAIL_FROM_NM
+		  , MAIL_FROM_EM
+		  , REPLY_TO_EM
+		  , RETURN_EM
+		  , CHARSET
+		  , TZ_CD
+		  , UILANG
+		  , REG_ID
+		  , REG_DT
+		  , USE_YN
+		  , PER_PAGE 
+		  , PWERROR_CNT 
+		  , CERTILOCK_GB
+		  , IPADDR_TXT
+		  , IPADDRCHK_YN 
+		)
+		SELECT  #{copyUserId}
+		  , DEPT_NO
+		  , #{userNm}
+		  , #{userPwd}
+		  , USER_EM
+		  , USER_TEL
+		  , USER_DESC
+		  , STATUS
+		  , MAIL_FROM_NM
+		  , MAIL_FROM_EM
+		  , REPLY_TO_EM
+		  , RETURN_EM
+		  , CHARSET
+		  , TZ_CD
+		  , UILANG
+		  , #{userId} 
+		  , REG_DT
+		  , USE_YN
+		  , PER_PAGE 
+		  , PWERROR_CNT 
+		  , CERTILOCK_GB
+		  , IPADDR_TXT
+		  , IPADDRCHK_YN 
+		FROM NEO_USER 
+		WHERE USER_ID = #{userId} 
+	</insert> 
  
 	<!-- 사용자 정보 수정 -->
 	<update id="updateUserInfo" parameterType="userVO">
