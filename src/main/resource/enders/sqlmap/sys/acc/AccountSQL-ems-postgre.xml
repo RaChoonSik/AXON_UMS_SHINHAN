@@ -793,7 +793,7 @@
 		  , #{ipaddrchkYn} 
 		)
 	</insert> 
-	
+ 
  	<!-- 사용자 정보 복사 -->
 	<insert id="copyUserInfo" parameterType="userVO">
 		INSERT INTO NEO_USER 
@@ -848,7 +848,7 @@
 		FROM NEO_USER 
 		WHERE USER_ID = #{userId} 
 	</insert> 
- 
+	
 	<!-- 사용자 정보 수정 -->
 	<update id="updateUserInfo" parameterType="userVO">
 		UPDATE NEO_USER
@@ -919,6 +919,15 @@
 			(#{userId}, #{progId})
 	</insert>
 	
+	<!-- 사용자 프로그램 정보 복사 -->
+	<insert id="copyUserServiceInfo" parameterType="userProgVO">
+		INSERT INTO NEO_USER_PROG
+			(USER_ID,PROG_ID)
+		SELECT #{copyUserId}, PROG_ID
+		FROM NEO_USER_PROG 
+		WHERE USER_ID = #{userId}
+	</insert>	
+	
 	<!-- 사용자 프로그램 정보 삭제 -->
 	<delete id="deleteUserProgInfo" parameterType="string">
 		DELETE FROM NEO_USER_PROG
@@ -945,6 +954,28 @@
 		  , #{regId}
 		  , #{regDt}
 		)
+	</insert>
+	
+	<!-- 사용자 조직 정보 복사-->
+	<insert id="copyUserOrgInfo" parameterType="userOrgVO">
+		INSERT INTO NEO_USERORG_MAPP 
+		(
+			USER_ID
+		  , ORG_CD
+		  , POSITION_GB
+		  , JOB_GB
+		  , REG_ID
+		  , REG_DT
+		)
+		SELECT 
+			#{copyUserId}
+		  , ORG_CD
+		  , POSITION_GB
+		  , JOB_GB
+		  , REG_ID
+		  , REG_DT
+		FROM NEO_USERORG_MAPP
+		WHERE USER_ID =  #{userId}
 	</insert>
 	
 	<!-- 사용자 조직 정보 수정 -->
@@ -1082,6 +1113,24 @@
 		 WHERE SERVICE_GB = #{progId}
 	</insert>
 	
+	<!-- 사용자 시스템 공통 설정 메뉴 등록 -->
+	<insert id="copyMenuUserMappInfo" parameterType="userProgVO">
+		INSERT INTO NEO_MENUUSER_MAPP 
+		(
+			MENU_ID
+		  , USER_ID 
+		  , REG_ID
+		  , REG_DT
+		)
+		SELECT MENU_ID
+			 , #{copyUserId}
+			 , REG_ID
+			 , REG_DT
+		  FROM NEO_MENUUSER_MAPP 
+		 WHERE USER_ID = #{userId}
+	</insert>
+		
+	
 	<!-- 준법 심의 결재라인 사용자 조회 -->
 	<select id="getComplianceUserList" parameterType="complianceVO" resultType="complianceVO">
 		SELECT B.USER_ID
@@ -1205,4 +1254,10 @@
 		   SET OATH_YMD = DATE_FORMAT(NOW(),'%Y%m%d')
 		 WHERE USER_ID   = #{userId} 
 	</update> 
+	
+	
+	<!-- - 신한 EZ -->
+	
+	
+	
 </mapper>

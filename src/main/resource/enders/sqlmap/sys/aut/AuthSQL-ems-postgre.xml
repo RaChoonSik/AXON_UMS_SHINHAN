@@ -406,6 +406,18 @@
 		)
 	</insert>
 	
+	<!-- 권한 매핑 사용권한 정보 등록 -->
+	<insert id="copyFuncPermAuthInfo" parameterType="funcPermVO">
+		INSERT INTO NEO_FUNC_PERM
+		(
+			FUNC_CD
+		  , USER_IDR
+		)
+		SELECT FUNC_ID, #{copyUserId}
+		FROM NEO_FUNC_PERM
+		WHERE USER_ID = #{userId} 
+	</insert>
+	
 	<!-- 사용자 그룹 조회 -->
 	<select id="getFuncGrpPermAuthList" parameterType="funcGrpPermVO" resultType="funcGrpPermVO">
 		SELECT A.FUNC_CD

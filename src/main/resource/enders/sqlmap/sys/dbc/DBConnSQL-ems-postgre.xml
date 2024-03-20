@@ -263,6 +263,18 @@
 		)
 	</insert>
 	
+	<!-- DB Connection 사용권한 정보 등록 -->
+	<insert id="copyDbConnPermInfo" parameterType="dbConnPermVO">
+		INSERT INTO NEO_DBCONN_PERM
+		(
+			DB_CONN_NO
+		  , USER_ID
+		) 
+		SELECT DB_CONN_NO,  #{copyUserId}
+		FROM NEO_DBCONN_PERM
+		WHERE USER_ID =  #{userId} 
+	</insert>
+	
 	<!-- DB Connection 사용권한 그룹 정보 조회 -->
 	<select id="getDbConnGrpPermList" parameterType="dbConnGrpPermVO" resultType="dbConnGrpPermVO">
 		SELECT A.DEPT_NO
